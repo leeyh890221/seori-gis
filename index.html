@@ -42,7 +42,7 @@ h2{font-size:24px;line-height:1.25;margin:0 0 6px}
 .mapbox .tools .narrow{position:static;width:44px;height:58px;box-shadow:none}
 .fz{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;flex:none}.fz:hover{background:var(--soft);color:var(--deep)}.fz:focus-visible{outline:3px solid #ffb703;outline-offset:2px}.li>.fz{margin-left:auto}
 .ztip{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:5;background:rgba(15,30,45,.88);color:#fff;font-size:13px;padding:6px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s}.ztip.on{opacity:1}
-.tools .tb2.on{background:#1565c0;border-color:#1565c0;color:#fff}.tools .tb2.on:hover{background:#0d47a1}.ztip.wide{pointer-events:auto;max-width:calc(100% - 120px);text-align:center;line-height:1.5}.ztip a{color:#ffe082;font-weight:700}@keyframes locp{0%{r:0;opacity:.7}100%{r:22px;opacity:0}}
+.tools .tb2.on{background:#1565c0;border-color:#1565c0;color:#fff}.tools .tb2.on:hover{background:#0d47a1}.tools .tb2.nof{background:#e3f2fd;border-color:#1565c0;color:#0d47a1}.ztip.wide{pointer-events:auto;max-width:calc(100% - 120px);text-align:center;line-height:1.5}.ztip a{color:#ffe082;font-weight:700}@keyframes locp{0%{r:0;opacity:.7}100%{r:22px;opacity:0}}
 @media(max-height:700px){.tools .zbar{display:none}}
 
 #map.drag{cursor:grabbing}
@@ -592,7 +592,7 @@ svg.addEventListener('pointerdown',e=>{PT.set(e.pointerId,{x:e.clientX,y:e.clien
 svg.addEventListener('pointermove',e=>{if(PT.has(e.pointerId))PT.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(pinch&&PT.size>=2){const [a,b]=[...PT.values()];const r=svg.getBoundingClientRect(),W=box.clientWidth,H=box.clientHeight,v0=pinch.vb0;const d=Math.hypot(a.x-b.x,a.y-b.y)||1;let sc=pinch.d0/d;const maxW=Math.min(WIDE[3]*0.98,WIDE[4]*0.98*W/H);sc=Math.max(150/v0.w,Math.min(sc,maxW/v0.w));
     const wx=v0.x+pinch.m0[0]/W*v0.w,wy=v0.y+(1-pinch.m0[1]/H)*v0.h,mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top,w=v0.w*sc,h=v0.h*sc;vb={x:wx-mx/W*w,y:wy-(1-my/H)*h,w,h};draw();return;}
-  if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4){moved=true;VT=true;}const k=vb.w/box.clientWidth;vb.x=drag.vx-dx*k;vb.y=drag.vy+dy*k;draw();});
+  if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4){moved=true;VT=true;if(LOCW!==null&&FOLLOW){FOLLOW=false;locBtn('nof');}}const k=vb.w/box.clientWidth;vb.x=drag.vx-dx*k;vb.y=drag.vy+dy*k;draw();});
 svg.addEventListener('pointercancel',e=>{PT.delete(e.pointerId);if(PT.size<2)pinch=null;drag=null;svg.classList.remove('drag');});
 svg.addEventListener('pointerup',e=>{PT.delete(e.pointerId);if(pinch||PT.size){if(PT.size<2)pinch=null;drag=null;moved=true;if(!PT.size)svg.classList.remove('drag');return;}svg.classList.remove('drag');const d=drag;drag=null;if(moved||!d)return;const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('.w');if(c){if(!same('w'+c.dataset.n))showWell(Number(c.dataset.n),false);return;}const er=el&&el.closest('.er');if(er){if(!same('e'+er.dataset.i))showEros(Number(er.dataset.i));return;}const wq=el&&el.closest('.wq');if(wq){if(!same('q'+wq.dataset.i))showWq(Number(wq.dataset.i));return;}const sb=el&&el.closest('.sb');if(sb){if(!same('b'+sb.dataset.i))showSabang(Number(sb.dataset.i));return;}const sm=el&&el.closest('.sm');if(sm){if(!same('m'+sm.dataset.i))showSumun(Number(sm.dataset.i));return;}const dp=el&&el.closest('.dp');if(dp){if(!same('d'+dp.dataset.k))showDosu(Number(dp.dataset.k));return;}const ds=el&&el.closest('.ds');if(ds){if(!same('d-1'))showDosu(-1);return;}const g=el&&el.closest('.fr');if(g){openViewer(Number(g.dataset.f)+NFIX-1);return;}const pc=el&&el.closest('.pc');if(pc){if(!same('p'+pc.dataset.k+pc.dataset.i))showParcel(pc.dataset.k,Number(pc.dataset.i));return;}if(CUR||sel||selP)clearSel();});
 document.getElementById('zin').onclick=()=>zoomAt(0.7,box.clientWidth/2,box.clientHeight/2);
@@ -612,24 +612,37 @@ const pName=h=>`${PK[h.k].jm} ${PC[h.k][h.i][0]}번`;
 function locTip(html,ms){const t=box.querySelector('.ztip')||(ztip(''),box.querySelector('.ztip'));t.classList.add('wide');t.innerHTML=html;t.classList.add('on');clearTimeout(ztipT);ztipT=setTimeout(()=>t.classList.remove('on','wide'),ms||6000);return t;}
 function locSelect(){if(!LOC)return;const tol=Math.min(30,Math.max(10,LOC.acc));const hits=parcelsNear(LOC.x,LOC.y,tol),hit=hits[0];
   const acc=`오차 약 ${Math.round(LOC.acc)}m`;
-  if(hit){showParcel(hit.k,hit.i);VT=true;safeFit([LOC.x,LOC.y,LOC.x,LOC.y],0,220);draw();
+  if(hit){LOCSELK=hit.k+hit.i;showParcel(hit.k,hit.i);VT=true;safeFit([LOC.x,LOC.y,LOC.x,LOC.y],0,220);draw();
     const alt=hits.slice(1).filter(h=>h.k!=='gugeo').slice(0,3);
-    const t=locTip(`내 위치 (${acc}) · <b>${pName(hit)}</b> 필지${hit.d>0?` (약 ${Math.round(hit.d)}m 옆)`:''}`+(alt.length?`<br>다른 필지: `+alt.map((h,j)=>`<a href="#" data-j="${j}">${pName(h)}</a>`).join(' · '):''),alt.length?9000:5000);
-    t.querySelectorAll('a[data-j]').forEach(a=>a.onclick=ev=>{ev.preventDefault();const h=alt[+a.dataset.j];showParcel(h.k,h.i);t.classList.remove('on','wide');});}
+    const t=locTip(`내 위치 (${acc}) · <b>${pName(hit)}</b> 필지${hit.d>0?` (약 ${Math.round(hit.d)}m 옆)`:''}`+(alt.length?`<br>다른 필지: `+alt.map((h,j)=>`<a href="#" data-j="${j}">${pName(h)}</a>`).join(' · '):'')+`<br><small>이동하면 파란 점이 따라 움직입니다 · <a href="#" class="locOff">위치 끄기</a></small>`,alt.length?9000:6000);t.querySelectorAll('.locOff').forEach(a=>a.onclick=ev=>{ev.preventDefault();t.classList.remove('on','wide');locStop();});
+    t.querySelectorAll('a[data-j]').forEach(a=>a.onclick=ev=>{ev.preventDefault();const h=alt[+a.dataset.j];LOCSELK=h.k+h.i;showParcel(h.k,h.i);t.classList.remove('on','wide');});}
   else{VT=true;safeFit([LOC.x,LOC.y,LOC.x,LOC.y],0,300);draw();
     const inA=LOC.x>EXT[0]-2000&&LOC.x<EXT[2]+2000&&LOC.y>EXT[1]-2000&&LOC.y<EXT[3]+2000;
     ztip(inA?`내 위치 (${acc}) · 논·밭 필지 밖입니다. 지도에서 필지를 눌러 주세요`:`내 위치가 과업 대상지역(서리) 밖입니다 (${acc})`);}}
-function locStart(auto){const btn=document.getElementById('zloc');
+let FOLLOW=true,LOCPIN=null,LOCSELK=null;
+function locBtn(st){const b=document.getElementById('zloc');b.classList.toggle('on',st==='on');b.classList.toggle('nof',st==='nof');b.setAttribute('aria-pressed',String(st!=='off'));b.querySelector('span').textContent=st==='off'?'내 위치':'다시 찾기';b.title=st==='off'?'현재 위치를 지도에 표시하고 그 자리 필지를 선택':'위치를 새로 찾아 그 자리 필지를 다시 선택';}
+function locStop(){if(LOCW!==null){navigator.geolocation.clearWatch(LOCW);LOCW=null;}LOC=null;LOCPIN=null;LOCSELK=null;locDraw();locBtn('off');ztip('내 위치 표시를 껏습니다');}
+function locKeep(){if(!LOC||!vb)return;const W=box.clientWidth,H=box.clientHeight,px=(LOC.x-vb.x)/vb.w*W,py=(1-(LOC.y-vb.y)/vb.h)*H,m=0.2;
+  if(px<W*m||px>W*(1-m)||py<H*m||py>H*(1-m)){const keepW=vb.w;safeFit([LOC.x,LOC.y,LOC.x,LOC.y],0,keepW*0.35);const k=keepW/vb.w;vb={x:LOC.x-(LOC.x-vb.x)*k,y:LOC.y-(LOC.y-vb.y)*k,w:keepW,h:vb.h*k};draw();}}
+function locMove(){if(!PC||!LOC)return;const h=parcelsNear(LOC.x,LOC.y,0).find(z=>z.k!=='gugeo');const key=h?h.k+':'+h.i:null;if(key===LOCPIN)return;const prev=LOCPIN;LOCPIN=key;if(!h||prev===null)return;
+  const editing=pwrap.contains(document.activeElement)&&document.activeElement.tagName==='INPUT';
+  if(!editing&&(CUR===null||CUR==='p'+LOCSELK)){LOCSELK=h.k+h.i;showParcel(h.k,h.i);ztip(`${pName(h)} 필지로 들어왔습니다`);}
+  else{const t=locTip(`${pName(h)} 필지로 들어왔습니다 · <a href="#" id="locPick">이 필지 선택</a>`,8000);const a=t.querySelector('#locPick');if(a)a.onclick=ev=>{ev.preventDefault();LOCSELK=h.k+h.i;showParcel(h.k,h.i);t.classList.remove('on','wide');};}}
+function locStart(reset){
   if(!('geolocation' in navigator)||!window.isSecureContext){ztip('이 브라우저에서는 위치를 쓸 수 없습니다');return;}
-  if(LOC&&LOCW!==null){locSelect();return;}
-  btn.classList.add('on');btn.setAttribute('aria-pressed','true');ztip('현재 위치를 찾는 중…');LOCSEL=true;
-  const ok=pos=>{const c=pos.coords,[x,y]=ll2tm(c.latitude,c.longitude);LOC={x,y,acc:c.accuracy||30,lat:c.latitude,lon:c.longitude};locDraw();if(LOCSEL&&PC){LOCSEL=false;locSelect();}};
-  const err=e=>{btn.classList.remove('on');btn.setAttribute('aria-pressed','false');if(LOCW!==null){navigator.geolocation.clearWatch(LOCW);LOCW=null;}
-    if(e.code===1&&window.top!==window){const u=location.pathname+(/embed=1/.test(location.search)?'?embed=1&locate=1':'?locate=1');
+  const again=LOCW!==null;if(again){navigator.geolocation.clearWatch(LOCW);LOCW=null;LOC=null;locDraw();}
+  FOLLOW=true;LOCSEL=true;LOCPIN=null;locBtn('on');ztip(again?'위치를 새로 찾는 중…':'현재 위치를 찾는 중…');
+  const ok=pos=>{const c=pos.coords,[x,y]=ll2tm(c.latitude,c.longitude);LOC={x,y,acc:c.accuracy||30,lat:c.latitude,lon:c.longitude,t:pos.timestamp};locDraw();
+    if(LOCSEL&&PC){LOCSEL=false;locSelect();const h0=parcelsNear(x,y,0).find(z=>z.k!=='gugeo');LOCPIN=h0?h0.k+':'+h0.i:'';return;}
+    if(FOLLOW)locKeep();locMove();};
+  const err=e=>{if(e.code!==1){if(!LOC)ztip('위치 신호를 찾는 중입니다… 하늘이 트인 곳에서 잠시 기다려 주세요');return;}
+    if(LOCW!==null){navigator.geolocation.clearWatch(LOCW);LOCW=null;}LOC=null;locDraw();locBtn('off');
+    if(window.top!==window){const u=location.pathname+(/embed=1/.test(location.search)?'?embed=1&locate=1':'?locate=1');
       locTip(`이 화면 안에서는 위치를 쓸 수 없습니다. <a href="${u}" target="_blank" rel="noopener">새 창에서 내 위치 보기</a>`,9000);return;}
-    ztip(e.code===1?'위치 권한이 꺼져 있습니다. 브라우저 설정에서 위치를 허용해 주세요':e.code===3?'위치를 찾지 못했습니다(시간 초과). 다시 눌러 주세요':'위치를 찾지 못했습니다. 다시 눌러 주세요');};
-  LOCW=navigator.geolocation.watchPosition(ok,err,{enableHighAccuracy:true,maximumAge:5000,timeout:20000});}
-document.getElementById('zloc').onclick=()=>locStart(false);
+    ztip('위치 권한이 꺼져 있습니다. 브라우저 설정에서 위치를 허용해 주세요');};
+  clearTimeout(window.__locT);window.__locT=setTimeout(()=>{if(LOCW!==null&&!LOC)ztip('아직 위치를 찾지 못했습니다. 잠시 더 기다리거나 \'다시 찾기\'를 눌러 주세요');},25000);
+  LOCW=navigator.geolocation.watchPosition(ok,err,{enableHighAccuracy:true,maximumAge:again?0:3000});}
+document.getElementById('zloc').onclick=()=>locStart(true);
 document.getElementById('zhome').onclick=goHome;document.getElementById('zfocus').onclick=focusSel;
 for(const li of document.querySelectorAll('.lyr .li')){const cb=li.querySelector('input[type=checkbox][id]'),lb=li.querySelector('label');if(!cb||!lb)continue;const c=lb.cloneNode(true);c.querySelectorAll('small').forEach(s=>s.remove());const nm=c.textContent.trim().replace(/\s+/g,' ');const b=document.createElement('button');b.type='button';b.className='fz';b.title=nm+' 레이어로 확대';b.setAttribute('aria-label',nm+' 레이어로 확대');b.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';b.onclick=()=>focusLayer(cb.id);const op=li.querySelector('.op');if(op)op.appendChild(b);else li.appendChild(b);}
 
@@ -794,7 +807,7 @@ function buildReport(){const R=document.getElementById('rpt');const q=sel=>docum
  return R;}
 window.buildReport=buildReport;document.getElementById('btnPdf').addEventListener('click',()=>{buildReport();const imgs=[...document.querySelectorAll('#rpt img')];Promise.all(imgs.map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r;}))).then(()=>{const t=document.title;document.title='서리_GIS분석_보고서';window.print();setTimeout(()=>{document.title=t;},1000);});});
 
-fetch('parcels.json').then(r=>r.json()).then(j=>{PC=j;applyEntries();buildStatic();draw();ptable();pstats();ertable();syncStats();if(/[?&]locate=1/.test(location.search))locStart(true);else if(LOC&&LOCSEL){LOCSEL=false;locSelect();}}).catch(()=>{document.getElementById('legend').insertAdjacentHTML('beforeend','<span>필지 자료를 불러오지 못했습니다.</span>');});
+fetch('parcels.json').then(r=>r.json()).then(j=>{PC=j;applyEntries();buildStatic();draw();ptable();pstats();ertable();syncStats();if(/[?&]locate=1/.test(location.search))locStart(false);else if(LOC&&LOCSEL){LOCSEL=false;locSelect();}}).catch(()=>{document.getElementById('legend').insertAdjacentHTML('beforeend','<span>필지 자료를 불러오지 못했습니다.</span>');});
 }
 </script>
 <div id="rpt"></div>
