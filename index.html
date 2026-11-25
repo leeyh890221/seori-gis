@@ -621,7 +621,7 @@ function locSelect(){if(!LOC)return;const tol=Math.min(30,Math.max(10,LOC.acc));
     ztip(inA?`내 위치 (${acc}) · 논·밭 필지 밖입니다. 지도에서 필지를 눌러 주세요`:`내 위치가 과업 대상지역(서리) 밖입니다 (${acc})`);}}
 let FOLLOW=true,LOCPIN=null,LOCSELK=null;
 function locBtn(st){const b=document.getElementById('zloc');b.classList.toggle('on',st==='on');b.classList.toggle('nof',st==='nof');b.setAttribute('aria-pressed',String(st!=='off'));b.querySelector('span').textContent=st==='off'?'내 위치':'다시 찾기';b.title=st==='off'?'현재 위치를 지도에 표시하고 그 자리 필지를 선택':'위치를 새로 찾아 그 자리 필지를 다시 선택';}
-function locStop(){if(LOCW!==null){navigator.geolocation.clearWatch(LOCW);LOCW=null;}LOC=null;LOCPIN=null;LOCSELK=null;locDraw();locBtn('off');ztip('내 위치 표시를 껏습니다');}
+function locStop(){if(LOCW!==null){navigator.geolocation.clearWatch(LOCW);LOCW=null;}LOC=null;LOCPIN=null;LOCSELK=null;locDraw();locBtn('off');ztip('내 위치 표시를 껐습니다');}
 function locKeep(){if(!LOC||!vb)return;const W=box.clientWidth,H=box.clientHeight,px=(LOC.x-vb.x)/vb.w*W,py=(1-(LOC.y-vb.y)/vb.h)*H,m=0.2;
   if(px<W*m||px>W*(1-m)||py<H*m||py>H*(1-m)){const keepW=vb.w;safeFit([LOC.x,LOC.y,LOC.x,LOC.y],0,keepW*0.35);const k=keepW/vb.w;vb={x:LOC.x-(LOC.x-vb.x)*k,y:LOC.y-(LOC.y-vb.y)*k,w:keepW,h:vb.h*k};draw();}}
 function locMove(){if(!PC||!LOC)return;const h=parcelsNear(LOC.x,LOC.y,0).find(z=>z.k!=='gugeo');const key=h?h.k+':'+h.i:null;if(key===LOCPIN)return;const prev=LOCPIN;LOCPIN=key;if(!h||prev===null)return;
