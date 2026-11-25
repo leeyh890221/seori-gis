@@ -145,6 +145,12 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 .pdfbtn{border:0;background:var(--deep,#0b3d6b);color:#fff;font:inherit;font-weight:700;font-size:14px;padding:9px 16px;border-radius:8px;cursor:pointer}.pdfbtn:hover{filter:brightness(1.15)}
 .updinfo{margin:6px 0 12px;font-size:13px;color:var(--muted,#5b6775)}
 #rpt{display:none}
+#map-sec:fullscreen{overflow:auto;background:var(--bg);padding:12px 16px}
+#map-sec:fullscreen .wrap{max-width:none}
+#map-sec:fullscreen .mapbox{height:calc(100vh - 96px);max-height:none}
+#map-sec:fullscreen .mapgrid{grid-template-columns:minmax(0,1fr) clamp(300px,24%,420px)}
+#map-sec:fullscreen .updinfo{margin:4px 0 8px}
+
 @media print{
  @page{size:A4;margin:14mm 13mm 14mm}
  body>*:not(#rpt){display:none!important}
@@ -245,7 +251,7 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 </div></header>
 
 <section class="band" id="map-sec"><div class="wrap">
-  <div class="mshead"><h2>과업 대상지역 현황</h2><button type="button" id="btnPdf" class="pdfbtn">보고서 PDF 저장</button></div>
+  <div class="mshead"><h2>과업 대상지역 현황</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" id="btnFs" class="pdfbtn" title="지도와 선택 정보를 화면 전체로 크게 봅니다 (Esc로 끝내기)">⛶ 전체 화면</button><button type="button" id="btnPdf" class="pdfbtn">보고서 PDF 저장</button></div></div>
   <p class="updinfo" id="updInfo"></p>
   <div class="mapgrid">
     <div>
@@ -964,6 +970,16 @@ function buildReport(){const R=document.getElementById('rpt');const q=sel=>docum
  ${bpReport(6)}<h2 class="pb">${bpRows().length?7:6}. 조사 및 결과 정리 방법</h2>${strip(q('#howto .wrap')?[...q('#howto .wrap').querySelectorAll('h3,.tbl')].map(e=>e.outerHTML).join(''):'')}
  <p class="note" style="border-top:2px solid #0b3d6b;padding-top:6px;margin-top:14px">본 자료는 2026년 소양강댐 양지천 유역 농업비점오염저감 용역에서 (주)휴먼플래닛이 작성한 자료입니다. 작성자 이용현 과장 · 유선 042-381-0180 · 휴대폰 010-8384-0221 · leeyh890221@gmail.com · 보고서 작성 ${ds}</p>`;
  return R;}
+{const sec=document.getElementById('map-sec'),b=document.getElementById('btnFs');
+ const fsEl=()=>document.fullscreenElement||document.webkitFullscreenElement;
+ const can=document.fullscreenEnabled||document.webkitFullscreenEnabled;
+ const upd=()=>{b.textContent=fsEl()?'✕ 전체 화면 끝내기':'⛶ 전체 화면';};
+ document.addEventListener('fullscreenchange',upd);document.addEventListener('webkitfullscreenchange',upd);
+ b.addEventListener('click',()=>{
+  if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return;}
+  if(can){const r=(sec.requestFullscreen||sec.webkitRequestFullscreen).call(sec);if(r&&r.catch)r.catch(()=>window.open(new URL('embed.html',location.href).href,'_blank'));}
+  else window.open(new URL('embed.html',location.href).href,'_blank');
+ });}
 window.buildReport=buildReport;document.getElementById('btnPdf').addEventListener('click',()=>{buildReport();const imgs=[...document.querySelectorAll('#rpt img')];Promise.all(imgs.map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r;}))).then(()=>{const t=document.title;document.title='서리_GIS분석_보고서';window.print();setTimeout(()=>{document.title=t;},1000);});});
 
 
