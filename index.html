@@ -162,6 +162,33 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
  #rpt .tag{color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
  #rpt *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* 사업 참여 · BMPs */
+.bpl{margin:10px 0 5px!important;font-size:12.5px;color:var(--sub)}.bpl small{color:var(--sub);font-weight:400}
+.bpg2{margin:4px 0 6px}.bpgl{display:block;font-size:11.5px;color:var(--sub);margin:0 0 3px}
+.bpchips{display:flex;flex-wrap:wrap;gap:5px}.bpchips button{min-height:30px;padding:0 9px;border:1px solid var(--line);border-radius:15px;background:var(--bg);color:var(--ink);font:inherit;font-size:12.5px;cursor:pointer}
+.bpchips button[aria-pressed=true]{background:#0a8f3c;border-color:#0a8f3c;color:#fff}
+.bpchips button:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+.bpbox{background:light-dark(#f3faf5,rgba(10,143,60,.08));border-color:light-dark(#b9dec4,rgba(10,143,60,.4))}
+.bpbox .bpj button[aria-pressed=true]{background:#0a8f3c;border-color:#0a8f3c}
+.bpbox [hidden]{display:none!important}
+.bpgrp select{font:inherit;font-size:14px;min-height:36px;padding:0 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);max-width:100%}
+.bpbr{border-top:1px dashed var(--line);padding-top:4px}.bpbr .ovseg{margin-bottom:6px}.bpbr .ovseg button[aria-pressed=true]{background:#0a8f3c;border-color:#0a8f3c}
+#brOn[aria-pressed=true]{background:#c62828;border-color:#c62828}
+.bpbar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:8px;max-width:calc(100% - 120px);background:#0a8f3c;color:#fff;font-size:13px;padding:5px 6px 5px 12px;border-radius:18px;box-shadow:0 3px 12px rgba(0,0,0,.25)}
+.bpbar[hidden]{display:none}.bpbar b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bpbar button{border:0;border-radius:14px;background:#fff;color:#0a8f3c;font:inherit;font-weight:700;font-size:12.5px;padding:4px 10px;cursor:pointer;flex:none}
+#map.brush .pc{cursor:copy}#map.edit{cursor:crosshair}
+.bpchips button i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}.bpchips button[aria-pressed=true] i{box-shadow:0 0 0 1.5px #fff}
+.bpln{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:5px 0;border-top:1px dashed var(--line);font-size:13px}.bpln>i{width:10px;height:10px;border-radius:50%;flex:none}.bpln>span{color:var(--sub);flex:1 1 auto}.bpln .mini{min-height:30px;padding:0 9px;font-size:12.5px}
+.bpq{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.bpq input[type=number]{width:110px;min-height:34px;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}.bpq select{min-height:34px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;padding:0 6px}.bpqa{font-size:12.5px;color:var(--sub)}
+.bpbox .bpt button[aria-pressed=true],.bpbox .bplm button[aria-pressed=true]{background:#0a8f3c;border-color:#0a8f3c;color:#fff}.bpedlen{margin:6px 0 0!important;font-size:13px}
+.bpdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.stt td.bpqt{font-weight:600}.mapbox:has(.bpbar:not([hidden])) .ztip{top:52px}
+#bpStF tbody th,#bpStB tbody th,#bpStF tfoot th,#bpStB tfoot th{text-align:left;font-weight:600;padding:7px 10px;border-bottom:1px solid var(--line)}
+#bpStF tfoot th,#bpStB tfoot th,#bpStF tfoot td,#bpStB tfoot td{font-weight:700;border-top:2px solid var(--ink)}
+.stt td.bmt,.stt th.bmt{text-align:left;white-space:normal;min-width:220px}.stt td.bpy{font-weight:700;color:#0a8f3c}
+#bpStB tbody tr{cursor:pointer}#bpStB tbody tr:hover{background:var(--soft)}#bpStB tr.z td,#bpStB tr.z th{color:#9aa4ae}
+#bptbl tbody tr{cursor:pointer}#bptbl .tag{padding:2px 8px;border-radius:4px}
+@media print{.bpbar{display:none!important}}
 </style>
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
@@ -211,6 +238,8 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
         <div class="sbar" id="sbar" aria-live="off"></div>
         <div class="legend" id="legend" aria-label="범례"></div>
         <button type="button" class="lgbtn" id="lgBtn" aria-expanded="false" aria-controls="legend">범례 보기</button>
+        <div class="bpbar" id="bpBar" hidden role="status"><span>일괄 지정 중</span><b id="bpBarTxt"></b><button type="button" id="bpBarOff">끝내기</button></div>
+        <div class="bpbar" id="bpEdBar" hidden role="status"><b id="bpEdTxt"></b><button type="button" id="bpEdOk">완료</button><button type="button" id="bpEdNo">취소</button></div>
         <div class="credit">2026년 소양강댐 양지천 유역 농업비점오염저감 용역 · (주)휴먼플래닛 작성</div>
         <div class="seg bmap" role="group" aria-label="바탕지도 선택"><button id="bBase" aria-pressed="true">기본</button><button id="bSat" aria-pressed="false">위성영상</button></div>
       </div>
@@ -230,6 +259,21 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
           <div class="li"><label><input type="checkbox" id="tChg" data-g="pc" checked><i class="sw" style="background:#f59a23;border:1px solid #c45f00"></i>지목 변경 구간 <small><span data-s="nChg">220</span>필지 · 과수·축사는 주황 테두리</small></label><span class="op">투명도 <input type="range" id="oChg" min="0" max="100" value="15" aria-label="지목 변경 구간 투명도"><output id="vChg">15%</output></span></div>
         </fieldset>
         <div style="display:grid;gap:12px;align-content:start">
+        <fieldset class="grp bpgrp">
+          <legend><label><input type="checkbox" class="gchk" data-g="bp" checked> 사업 참여 · BMPs</label><button type="button" class="gtog" aria-expanded="true" aria-label="사업 참여 · BMPs 접기">접기 ▴</button></legend>
+          <div class="li"><label><input type="checkbox" id="tBpY" data-g="bp" checked><i class="sw" style="background:#bfe8cc;border:2px solid #0a8f3c"></i>참여 필지 <small><span data-b="nY">0</span>필지 · <span data-b="aY">0.0</span>ha</small></label></div>
+          <div class="li"><label><input type="checkbox" id="tBpN" data-g="bp" checked><i class="sw" style="background:#fff1cc;border:2px dashed #d98a00"></i>협의 중 <small><span data-b="nN">0</span>필지</small></label></div>
+          <div class="li"><label><input type="checkbox" id="tBpX" data-g="bp" checked><i class="sw" style="background:#e9ecef;border:2px dotted #6b7480"></i>미참여 <small><span data-b="nX">0</span>필지</small></label></div>
+          <div class="li"><label><input type="checkbox" id="tBpL" data-g="bp" checked><i class="sw" style="background:linear-gradient(90deg,#8e24aa 0 25%,#1e88e5 25% 50%,#d81b60 50% 75%,#f4511e 75%)"></i>BMP 그림 <small>라인·폴리곤·필지 전체 <span data-b="nG">0</span>건</small></label></div>
+          <div class="row"><span>BMP별 보기</span><select id="bpF" aria-label="BMP별로 필지 보기"><option value="">전체 BMPs</option></select></div>
+          <div class="bpbr">
+            <p class="bpl"><b style="color:var(--ink)">일괄 지정</b> <small>· 같은 내용을 여러 필지에 넣을 때</small></p>
+            <div class="ovseg" id="brJ" role="group" aria-label="일괄 지정 참여 여부"></div>
+            <div id="brB"></div>
+            <div class="ovact"><button type="button" class="mini pri" id="brOn" aria-pressed="false">지도에서 일괄 지정 시작</button></div>
+            <p class="ovnote">시작한 뒤 지도에서 필지를 누르면 위 내용이 바로 저장됩니다. 같은 필지를 다시 누르면 취소됩니다.</p>
+          </div>
+        </fieldset>
         <fieldset class="grp closed">
           <legend><label><input type="checkbox" class="gchk" data-g="fl" checked> 유수방향</label><button type="button" class="gtog" aria-expanded="false" aria-label="유수방향 펼치기">펼치기 ▾</button></legend>
           <div class="li"><label><input type="checkbox" id="tFlow" data-g="fl" checked><i class="sw" style="height:5px;border-radius:2px;background:linear-gradient(90deg,#8fd8ff,#062a7a)"></i>본류 유수방향 <small>양지천 · 용마골천(수문까지) · 내린천변 구거(수문까지)</small></label></div>
@@ -280,6 +324,27 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
   <p class="notes" style="margin:0 0 4px" id="erSum"></p>
   <div class="sttw"><table class="stt" id="ertbl"><thead><tr><th>구간</th><th style="text-align:left">관리 순위</th><th style="text-align:left">지번 (서리)</th><th>면적(㎡)</th><th style="text-align:left">근거 기초조사 기록</th></tr></thead><tbody></tbody></table></div>
   <p class="notes" style="margin-top:8px">가장 넓은 곳은 E-07(서리 621·616 고랭지밭, 1.7ha)이며, E-07·E-08은 용마골천으로, E-11은 양지천으로 토사가 바로 흘러드는 구간입니다. 행을 누르면 지도에서 보여 줍니다.</p>
+</div></section>
+
+<section class="band" style="padding-top:0" id="bmp"><div class="wrap">
+  <h2>사업 참여 필지 · BMPs 계획</h2>
+  <p class="sec-sub">지도에서 필지를 누르고 선택 정보의 ‘사업 참여 · BMPs’에서 참여 여부와 적용할 BMPs를 저장하면 아래 표가 바로 계산됩니다. 여러 필지에 같은 내용을 넣을 때는 레이어의 ‘일괄 지정’을 쓰세요. 현재 작성 <b><span data-b="nAll">0</span>필지</b>.</p>
+  <h3 style="margin:0 0 2px;font-size:15.5px">형태별 사업 참여 현황</h3>
+  <div class="sttw"><table class="stt" id="bpStF"><thead><tr><th>형태 (조사 결과)</th><th>전체 필지</th><th>참여 개소</th><th>참여 면적(ha)</th><th>협의 중</th><th>미참여</th><th>미정</th><th>참여율</th><th class="bmt">적용 BMPs (참여 필지, 개소)</th></tr></thead><tbody><tr><td colspan="9">필지 자료를 불러오는 중입니다.</td></tr></tbody><tfoot></tfoot></table></div>
+  <p class="notes" style="margin-top:6px">형태는 기초조사 결과(지목 수정 반영) 기준입니다. 미정 = 전체 필지 − (참여 + 협의 중 + 미참여). 구거는 BMPs를 넣은 필지만 세며 전체·미정에서 뺍니다.</p>
+  <h3 style="margin:22px 0 2px;font-size:15.5px">BMP별 적용 현황</h3>
+  <div class="sttw"><table class="stt" id="bpStB"><thead><tr><th>BMP</th><th>참여 개소</th><th>참여 면적(ha)</th><th>물량</th><th>지도에 그린 개소</th><th>협의 중</th><th>논</th><th>밭</th><th>과수</th><th>축사</th><th>기타</th><th class="bmt">대상 필지 (서리, 참여)</th></tr></thead><tbody></tbody><tfoot></tfoot></table></div>
+  <p class="notes" style="margin-top:6px">물량은 필지마다 입력한 값을 단위별로 더한 것입니다. 논·밭·과수·축사·기타는 참여 필지의 형태별 개소이며, 한 필지에 BMP를 여러 개 넣으면 각각 셉니다. 행을 누르면 그 BMP가 들어간 필지만 지도에 보여 줍니다.</p>
+  <h3 style="margin:22px 0 8px;font-size:15.5px">필지별 목록</h3>
+  <div class="search">
+    <div class="seg" role="group" aria-label="참여 여부 필터" id="bpLf"><button data-f="all" aria-pressed="true">전체</button><button data-f="참여" aria-pressed="false">참여</button><button data-f="협의 중" aria-pressed="false">협의 중</button><button data-f="미참여" aria-pressed="false">미참여</button></div>
+    <input id="bpq" type="search" placeholder="지번·필지 번호·BMP·메모로 검색" aria-label="사업 참여 필지 검색">
+    <button type="button" class="mini pri" id="bpXls" style="background:#1d6f42;border-color:#1d6f42;color:#fff">엑셀(.xlsx) 내려받기</button>
+    <button type="button" class="mini" id="bpExp">작성 내용 내보내기</button><button type="button" class="mini" id="bpImp">불러오기</button><input type="file" id="bpFile" accept=".json,application/json" hidden>
+    <span id="bpcnt" class="notes"></span>
+  </div>
+  <div class="tbl"><table class="stack" id="bptbl"><thead><tr><th class="n">번호</th><th>필지</th><th>지번</th><th>형태(조사 결과)</th><th class="n">면적(㎡)</th><th>참여 여부</th><th>적용 BMPs · 물량</th><th>메모</th><th>작성</th></tr></thead><tbody><tr><td colspan="9">필지 자료를 불러오는 중입니다.</td></tr></tbody></table></div>
+  <p class="notes" style="margin-top:8px">엑셀에는 ‘형태별 참여 현황’, ‘BMP별 적용 현황’(단위별 물량), ‘필지별 목록’(BMP마다 그린 방식·물량·단위), ‘BMP 도형 목록’(좌표·WKT) 4개 시트가 들어갑니다. 행을 누르면 지도에서 그 필지를 보여 줍니다.</p>
 </div></section>
 
 <section class="band" style="padding-top:0" id="plist"><div class="wrap">
@@ -388,7 +453,7 @@ function same(k){if(CUR===k){clearSel();return true;}return false;}
 const fit=e=>{const pad=0.06,w=e[2]-e[0],h=e[3]-e[1],cw=box.clientWidth,ch=box.clientHeight;let W2=w*(1+pad*2),H2=h*(1+pad*2);if(W2/H2<cw/ch)W2=H2*cw/ch;else H2=W2*ch/cw;const cx=(e[0]+e[2])/2,cy=(e[1]+e[3])/2;vb={x:cx-W2/2,y:cy-H2/2,w:W2,h:H2};};
 
 let VT=false;
-const OVS=['.tools','.narrow','.sbar','.legend','.lgbtn','.bmap','.credit','.pwrap'];
+const OVS=['.tools','.narrow','.sbar','.legend','.lgbtn','.bmap','.credit','.pwrap','.bpbar'];
 function safeFit(e,padR,minW){padR=padR==null?0.03:padR;const W=box.clientWidth,H=box.clientHeight;if(!W||!H){fit(e);return;}
   let x0=e[0],y0=e[1],x1=e[2],y1=e[3];if(minW){const cx=(x0+x1)/2,cy=(y0+y1)/2,w=Math.max(x1-x0,minW),h=Math.max(y1-y0,minW*0.6);x0=cx-w/2;x1=cx+w/2;y0=cy-h/2;y1=cy+h/2;}
   const ew=(x1-x0)*(1+2*padR)||1,eh=(y1-y0)*(1+2*padR)||1,br=box.getBoundingClientRect(),G=8,obs=[];
@@ -412,7 +477,7 @@ function selExt(){if(!CUR)return null;const t=CUR[0],n=Number(CUR.slice(1)),A=EM
   return null;}
 function layerExt(id){const A=EMPTY();const pc=f=>{if(!PC)return;for(const k of ['jeon','dap','gugeo'])PC[k].forEach(p=>{if(f(k,p[0]))for(const poly of p[6])for(const r of poly)bbFlat(r,A);});};
   const C={tDap:'dap',tJeon:'jeon',tGwa:'gwa',tChuk:'chuk',tEtc:'etc',tGugeo:'gugeo',tNos:'nos',tGone:'gone'},xy=a=>a.map(m=>[m.x,m.y]);
-  if(C[id])pc((k,no)=>clsOf(k,no)===C[id]);else if(id==='tChg')pc((k,no)=>isChg(k,no));
+  if(C[id])pc((k,no)=>clsOf(k,no)===C[id]);else if(/^tBp/.test(id))bpExt(id,A,pc);else if(id==='tChg')pc((k,no)=>isChg(k,no));
   else if(id==='tEros')EROS.forEach(e=>e.r.forEach(r=>bbXY(r,A)));else if(id==='tFlow')FLOW.forEach(f=>bbXY(f.pts,A));else if(id==='tDrain')DRAIN.forEach(d=>bbXY(d[1],A));
   else if(id==='tWAg')bbXY(xy(W.filter(isAg)),A);else if(id==='tWGen')bbXY(xy(W.filter(w=>!isAg(w))),A);else if(id==='tAnalysis')bbXY(xy(W),A);else if(id==='tEx')bbXY(xy(EX),A);
   else if(id==='tDosu')bbXY(DOSU,A);else if(id==='tDosuPt')bbXY([DOSU[0],DOSU[DOSU.length-1]],A);else if(id==='tSabang')bbXY(xy(SABANG),A);else if(id==='tSumun')bbXY(xy(SUMUN),A);else if(id==='tWq')bbXY(xy(WQ),A);
@@ -440,6 +505,54 @@ function saveOV(key,val){const prev=OV[key];if(val)OV[key]=val;else delete OV[ke
   return fetch(OV_API,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value:val||null})}).then(r=>{if(r.status===401||r.status===403)throw {auth:true};if(!r.ok)throw {};return r.json();}).then(o=>{if(o&&o.data)OV=o.data;return 'server';}).catch(e=>{if(prev)OV[key]=prev;else delete OV[key];throw e;});}
 if(!OV_API)loadOV();
 
+// ===== 사업 참여 필지 · BMPs 계획 (상태·저장) =====
+// BP_API를 플랫폼 주소로 바꾸면 여러 사람이 같은 내용을 함께 봅니다. null이면 이 브라우저(localStorage)에 저장합니다.
+const BP_API=null,BP_KEY='seori_gis_bmp_v1';let BP={},BP_MODE='local';
+const BPJ=['참여','협의 중','미참여'];
+const BPJC={'참여':['#0a8f3c','#bfe8cc'],'협의 중':['#d98a00','#fff1cc'],'미참여':['#6b7480','#e9ecef']};
+const BPL={tBpY:'참여',tBpN:'협의 중',tBpX:'미참여'};
+// BMPs 목록 (필요하면 여기서 고치세요)
+const BMPS=[{g:'BMPs',items:['지표피복','토양밴딩','식생토낭','완효성비료']}];
+// 지도에 그리는 BMP 색
+const BMPC={'지표피복':'#8e24aa','토양밴딩':'#1e88e5','식생토낭':'#d81b60','완효성비료':'#f4511e'};
+const BMPC2=['#00897b','#5d4037','#3949ab','#c0ca33'];
+const bpBase=()=>BMPS.flatMap(g=>g.items);
+const bpAll=()=>{const a=bpBase(),s=new Set(a);for(const v of Object.values(BP))for(const b of (v&&v.b)||[])if(!s.has(b)){s.add(b);a.push(b);}return a;};
+const bpCol=b=>BMPC[b]||BMPC2[Math.max(0,bpAll().indexOf(b))%BMPC2.length];
+const lenF=f=>{let s=0;for(let j=2;j<f.length;j+=2)s+=Math.hypot(f[j]-f[j-2],f[j+1]-f[j-1]);return s;};
+const areaF=f=>{let s=0;const n=f.length;for(let j=0;j<n;j+=2){const k=(j+2)%n;s+=f[j]*f[k+1]-f[k]*f[j+1];}return Math.abs(s)/2;};
+const BPGT={parcel:'필지 전체',line:'라인',poly:'폴리곤'};
+const BPU=['m','㎡','ha','개소','개','포','kg','ton','식'];
+const gDef=t=>t==='line'?'m':'㎡';
+// G[bmp]={t:'parcel'|'line'|'poly', g:[평탄 좌표 배열…], q:물량, u:단위, qa:자동계산 여부}
+const gMeas=(e,p)=>!e?0:e.t==='line'?(e.g||[]).reduce((s,f)=>s+lenF(f),0):e.t==='poly'?(e.g||[]).reduce((s,f)=>s+areaF(f),0):(p?p[3]:0);
+const bpLocalLoad=()=>{try{const o=JSON.parse(localStorage.getItem(BP_KEY)||'{}');return o&&typeof o==='object'?o:{};}catch(e){return {};}};
+const bpLocalSave=()=>{try{localStorage.setItem(BP_KEY,JSON.stringify(BP));return true;}catch(e){return false;}};
+const loadBP=()=>{if(!BP_API){BP=bpLocalLoad();return Promise.resolve();}return fetch(BP_API,{cache:'no-store',credentials:'same-origin'}).then(r=>{if(!r.ok)throw 0;return r.json();}).then(o=>{BP=(o&&o.data)||{};BP_MODE='server';}).catch(()=>{BP=bpLocalLoad();BP_MODE='local';});};
+function saveBP(key,val){const prev=BP[key];if(val)BP[key]=val;else delete BP[key];
+  if(BP_MODE!=='server')return bpLocalSave()?Promise.resolve('local'):Promise.reject({});
+  return fetch(BP_API,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,value:val||null})}).then(r=>{if(r.status===401||r.status===403)throw {auth:true};if(!r.ok)throw {};return r.json();}).then(o=>{if(o&&o.data)BP=o.data;return 'server';}).catch(e=>{if(prev)BP[key]=prev;else delete BP[key];throw e;});}
+if(!BP_API)BP=bpLocalLoad();
+let BPI=null;const bpIdx=key=>{if(!PC)return -1;if(!BPI){BPI=new Map();for(const k of ['dap','jeon','gugeo'])PC[k].forEach((p,i)=>BPI.set(k+':'+p[0],i));}return BPI.has(key)?BPI.get(key):-1;};
+const BPT={y:true,n:true,x:true,ln:true,f:''};
+let ED=null; // 설치 라인 지정 중인 상태
+const bpVis=v=>v&&(v.j==='참여'?BPT.y:v.j==='협의 중'?BPT.n:BPT.x)&&(!BPT.f||((v.j!=='미참여')&&(v.b||[]).includes(BPT.f)));
+const lineD=f=>{let d='M'+f[0]+','+(-f[1]);for(let j=2;j<f.length;j+=2)d+='L'+f[j]+','+(-f[j+1]);return d;};
+function bpSvg(){if(!PC)return '';let h='',hp='',hl='';
+  for(const [key,v] of Object.entries(BP)){if(!v)continue;const i=bpIdx(key);if(i<0)continue;const k=key.split(':')[0],p=PC[k][i],c=BPJC[v.j]||BPJC['참여'];
+    if(bpVis(v)){const d=p[6].map(poly=>poly.map(ringD).join('')).join('');const da=v.j==='협의 중'?' stroke-dasharray="7 4"':v.j==='미참여'?' stroke-dasharray="2 3"':'';
+      h+=`<path d="${d}" fill-rule="evenodd" fill="${c[0]}" fill-opacity="${v.j==='참여'?.3:.16}" stroke="#fff" stroke-opacity=".85" stroke-width="4.5" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none"/><path d="${d}" fill-rule="evenodd" fill="none" stroke="${c[0]}" stroke-width="${v.j==='참여'?2.6:2}" stroke-linejoin="round"${da} vector-effect="non-scaling-stroke" pointer-events="none"/>`;}
+    if(BPT.ln&&v.j!=='미참여'&&v.G&&!(ED&&ED.key===key))for(const [b,e] of Object.entries(v.G)){if(BPT.f&&BPT.f!==b)continue;if(!(v.b||[]).includes(b)||!e)continue;const col=bpCol(b),tt=`<title>${esc(b)} · ${BPGT[e.t]||''}${e.q!=null?' · 물량 '+e.q+(e.u||''):''}</title>`;
+      if(e.t==='parcel'){const d=p[6].map(poly=>poly.map(ringD).join('')).join('');hp+=`<path d="${d}" fill-rule="evenodd" fill="${col}" fill-opacity=".22" stroke="${col}" stroke-width="2.4" stroke-dasharray="1 4" stroke-linecap="round" vector-effect="non-scaling-stroke" pointer-events="none">${tt}</path>`;continue;}
+      for(const f of e.g||[]){if(!f||f.length<4)continue;
+        if(e.t==='poly'){const d=lineD(f)+'Z';hp+=`<path d="${d}" fill="${col}" fill-opacity=".38" stroke="#fff" stroke-width="5" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none">${tt}</path>`;}
+        else{const d=lineD(f);hl+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none"/><path d="${d}" fill="none" stroke="${col}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none">${tt}</path>`;}}}}
+  BPHL=hl;return h+hp;}
+let BPHL='';const bpSvgL=()=>BPHL;
+function bpExt(id,A,pc){if(BPL[id]){pc((k,no)=>{const v=BP[k+':'+no];return !!v&&v.j===BPL[id];});return;}
+  if(id==='tBpL')for(const [key,v] of Object.entries(BP))if(v&&v.G&&v.j!=='미참여')for(const e of Object.values(v.G)){if(!e)continue;if(e.t==='parcel'){const i=bpIdx(key);if(i>=0)for(const poly of PC[key.split(':')[0]][i][6])for(const r of poly)bbFlat(r,A);}else for(const f of e.g||[])bbFlat(f,A);}}
+
+
 const GONE=new Set(SV.gone||[]);
 const SABANG=[{"x": 309475.1, "y": 596463.6, "name": "사방댐 (양지천 상류)", "rec": ["사방댐", "", "2026-11-18", "김영준"], "flow": 14.0}, {"x": 313999.0, "y": 596050.9, "name": "사방댐 (용마골천, 인제군)", "rec": ["사방댐", "사방댐(인제군) · 시설물", "2026-11-18", "이용현"], "note": "상류 고랭지밭(162번)에서 수로가 연결됨", "flow": 90.0}];
 const SUMUN=[{x:314012.8,y:596816.9,name:'수문 (용마골천)',memo:'용마골천 수로 수문 · 기초조사 2026-11-18 기록(시설물)'}];
@@ -462,9 +575,10 @@ function buildStatic(){
   let h=T.sat?'':`<polygon points="${pts}" style="fill:var(--landin)" stroke="none"/>`;
   if(PC) for(const pass of [0,1]) for(const k of ['jeon','dap','gugeo']){ PC[k].forEach((p,i)=>{const c=visCls(k,p[0]);if(!c||(c==='chg')!==(pass===1))return;h+=`<path class="pc p-${c}${chgO(k,p[0])?' chgo':''}${selP&&selP.k===k&&selP.i===i?' on':''}" data-k="${k}" data-i="${i}" fill-rule="evenodd" d="${p[6].map(poly=>poly.map(ringD).join('')).join('')}"><title>${PK[k].jm} ${esc(p[0])}번 · 서리 ${esc(p[1])}</title></path>`;}); }
   if(T.eros)EROS.forEach((e,i)=>{const hi=e.g==='높음';h+=`<path class="er" data-i="${i}" fill-rule="evenodd" d="${e.r.map(r=>'M'+r.map(p=>p[0]+','+(-p[1])).join('L')+'Z').join('')}" fill="url(#${hi?'erH':'erM'})" stroke="${hi?'#a0401a':'#c46f12'}" stroke-width="2.2" stroke-dasharray="6 3" vector-effect="non-scaling-stroke" style="cursor:pointer"><title>${e.id} 토사유실 중점관리구간 (${e.g==='높음'?'1순위':'2순위'})</title></path>`;});
+  h+=bpSvg();
   h+=`<polygon points="${pts}" fill="none" stroke="#fff" stroke-width="5" stroke-opacity=".8" vector-effect="non-scaling-stroke" pointer-events="none"/><polygon points="${pts}" fill="none" stroke="#d6172b" stroke-width="2.2" stroke-dasharray="9 5" vector-effect="non-scaling-stroke" pointer-events="none"/>`;
   if(PC&&selP){const p=PC[selP.k][selP.i],d=p[6].map(poly=>poly.map(ringD).join('')).join('');h+=`<path d="${d}" fill-rule="evenodd" fill="#ff1744" fill-opacity=".22" stroke="#fff" stroke-width="9" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none"/><path class="selhl" d="${d}" fill-rule="evenodd" fill="none" stroke="#e0002a" stroke-width="4" stroke-linejoin="round" vector-effect="non-scaling-stroke" pointer-events="none"/>`;}
-  gS.innerHTML=h;
+  h+=bpSvgL();gS.innerHTML=h;
 }
 function draw(){
   if(!vb) safeFit(EXT);
@@ -505,9 +619,9 @@ function draw(){
   if(showNo){const done=new Set();for(const w of W){if(!wVis(w))continue;const k=w.x+','+w.y;if(done.has(k))continue;done.add(k);const gw=W.filter(v=>v.x===w.x&&v.y===w.y&&wVis(v)),grp=gw.map(v=>v.no).join(','),gc=gw.every(isAg)?'#0d6b31':'#1f3f8f';const tw=(grp.length*6.6+8)*lw,th=15*lw,lx=sx(w.x)+5*lw,ly=sy(w.y)-th-5*lw;
     h+=`<g pointer-events="none"><rect x="${lx}" y="${ly}" width="${tw}" height="${th}" rx="${2*lw}" fill="${gc}" stroke="#fff" stroke-width="${0.8*lw}"/><text x="${lx+tw/2}" y="${ly+11*lw}" font-size="${10.5*lw}" fill="#fff" text-anchor="middle" font-weight="700">${grp}</text></g>`;}}
   if(sel&&wVis(W.find(v=>v.no===sel))){const w=W.find(v=>v.no===sel);h+=`<circle class="pulse" cx="${sx(w.x)}" cy="${sy(w.y)}" r="${r*1.9}" fill="none" stroke="#ffb703" stroke-width="${3*lw}"/>`;}
-  gD.innerHTML=h;
+  h+=bpEdSvg(lw);gD.innerHTML=h;
 }
-function legend(){document.getElementById('legend').innerHTML=(T.wAg?`<span><i style="background:#0f7a36;border-radius:2px"></i>농업용 관정</span>`:'')+(T.wGen?`<span><i style="background:var(--red)"></i>생활·기타 관정</span>`:'')+(T.dap?`<span><i style="border-radius:2px;background:#c5e79a;border:1px solid #78a843"></i>${MODE==='srv'?'논 (기초조사)':'논 (지적도)'}</span>`:'')+(T.jeon?`<span><i style="border-radius:2px;background:#e7d0aa;border:1px solid #a77d4c"></i>${MODE==='srv'?'밭 (기초조사)':'밭 (지적도)'}</span>`:'')+(T.gugeo?`<span><i style="border-radius:2px;background:#5c9fe4;border:1px solid #1d5fae"></i>구거</span>`:'')+(T.gwa&&MODE==='srv'?`<span><i style="border-radius:2px;background:#f3b6cf;border:1px solid #b8487a"></i>과수</span>`:'')+(T.chuk&&MODE==='srv'?`<span><i style="border-radius:2px;background:#b9a2e3;border:1px solid #6a46a8"></i>축사</span>`:'')+(T.etc&&MODE==='srv'&&Object.values(OV).some(o=>o&&o.c==='미분류')?`<span><i style="border-radius:2px;background:#9fd3c7;border:1px solid #2a7f6f"></i>미분류 (기타)</span>`:'')+(T.eros?`<span><i style="border-radius:2px;background:repeating-linear-gradient(-45deg,#a0401a 0 2px,#f3dccf 2px 5px);border:1px solid #a0401a"></i>토사유실 중점관리구간</span>`:'')+(T.nos&&MODE==='srv'?`<span><i class="sw nos" style="border-radius:2px"></i>미조사 구간</span>`:'')+(T.gone&&MODE==='srv'?`<span><i class="sw gone" style="border-radius:2px"></i>소실 필지</span>`:'')+(T.chg?`<span><i style="border-radius:2px;background:#f59a23;border:1px solid #c45f00"></i>지목 변경 구간</span>`:'')+(T.an?`<span><i style="background:#fff;border:2px solid var(--red)"></i>분석 제외(상세도 5·10)</span>`:'')+(T.ex?`<span><i style="border:2px solid #8a96a3"></i>제외 관정</span>`:'')+((T.flow||T.drain)?`<span><i style="border-radius:2px;height:5px;width:22px;background:linear-gradient(90deg,#8fd8ff,#062a7a)"></i>유수방향 (상류→하류) ▸</span>`:'')+(T.dosu?`<span><i style="border-radius:2px;height:4px;width:18px;background:#7b2cbf"></i>도수관로 (계획) ▸ 도수 방향</span>`:'')+(T.dosuPt?`<span><i style="background:#7b2cbf"></i>유입부 · 농업용수 집수정</span>`:'')+(T.wq?`<span><i style="background:#f4a100;border:2px solid #5c3d00"></i>수질 조사지점 (계획안)</span>`:'')+(T.sabang?`<span><i style="border-radius:2px;width:14px;height:9px;background:#5b4636"></i>사방댐</span>`:'')+(T.sumun?`<span><i style="background:#0e7c86;border-radius:1px;transform:rotate(45deg)"></i>수문</span>`:'')+`<span><i style="border-radius:0;height:3px;background:var(--red)"></i>서리 리 경계</span>`+(SH.size?`<span><i style="border-radius:2px;border:2px solid var(--frame)"></i>상세도 범위</span>`:'');}
+function legend(){document.getElementById('legend').innerHTML=(T.wAg?`<span><i style="background:#0f7a36;border-radius:2px"></i>농업용 관정</span>`:'')+(T.wGen?`<span><i style="background:var(--red)"></i>생활·기타 관정</span>`:'')+(T.dap?`<span><i style="border-radius:2px;background:#c5e79a;border:1px solid #78a843"></i>${MODE==='srv'?'논 (기초조사)':'논 (지적도)'}</span>`:'')+(T.jeon?`<span><i style="border-radius:2px;background:#e7d0aa;border:1px solid #a77d4c"></i>${MODE==='srv'?'밭 (기초조사)':'밭 (지적도)'}</span>`:'')+(T.gugeo?`<span><i style="border-radius:2px;background:#5c9fe4;border:1px solid #1d5fae"></i>구거</span>`:'')+(T.gwa&&MODE==='srv'?`<span><i style="border-radius:2px;background:#f3b6cf;border:1px solid #b8487a"></i>과수</span>`:'')+(T.chuk&&MODE==='srv'?`<span><i style="border-radius:2px;background:#b9a2e3;border:1px solid #6a46a8"></i>축사</span>`:'')+(T.etc&&MODE==='srv'&&Object.values(OV).some(o=>o&&o.c==='미분류')?`<span><i style="border-radius:2px;background:#9fd3c7;border:1px solid #2a7f6f"></i>미분류 (기타)</span>`:'')+(T.eros?`<span><i style="border-radius:2px;background:repeating-linear-gradient(-45deg,#a0401a 0 2px,#f3dccf 2px 5px);border:1px solid #a0401a"></i>토사유실 중점관리구간</span>`:'')+(T.nos&&MODE==='srv'?`<span><i class="sw nos" style="border-radius:2px"></i>미조사 구간</span>`:'')+(T.gone&&MODE==='srv'?`<span><i class="sw gone" style="border-radius:2px"></i>소실 필지</span>`:'')+(T.chg?`<span><i style="border-radius:2px;background:#f59a23;border:1px solid #c45f00"></i>지목 변경 구간</span>`:'')+(T.an?`<span><i style="background:#fff;border:2px solid var(--red)"></i>분석 제외(상세도 5·10)</span>`:'')+(T.ex?`<span><i style="border:2px solid #8a96a3"></i>제외 관정</span>`:'')+((T.flow||T.drain)?`<span><i style="border-radius:2px;height:5px;width:22px;background:linear-gradient(90deg,#8fd8ff,#062a7a)"></i>유수방향 (상류→하류) ▸</span>`:'')+(T.dosu?`<span><i style="border-radius:2px;height:4px;width:18px;background:#7b2cbf"></i>도수관로 (계획) ▸ 도수 방향</span>`:'')+(T.dosuPt?`<span><i style="background:#7b2cbf"></i>유입부 · 농업용수 집수정</span>`:'')+(T.wq?`<span><i style="background:#f4a100;border:2px solid #5c3d00"></i>수질 조사지점 (계획안)</span>`:'')+(T.sabang?`<span><i style="border-radius:2px;width:14px;height:9px;background:#5b4636"></i>사방댐</span>`:'')+(T.sumun?`<span><i style="background:#0e7c86;border-radius:1px;transform:rotate(45deg)"></i>수문</span>`:'')+`<span><i style="border-radius:0;height:3px;background:var(--red)"></i>서리 리 경계</span>`+(Object.keys(BP).length&&BPT.y?`<span><i style="border-radius:2px;background:#bfe8cc;border:2px solid #0a8f3c"></i>사업 참여 필지${BPT.f?' ('+esc(BPT.f)+')':''}</span>`:'')+(Object.keys(BP).length&&BPT.n?`<span><i style="border-radius:2px;background:#fff1cc;border:2px dashed #d98a00"></i>협의 중</span>`:'')+(Object.keys(BP).length&&BPT.x&&!BPT.f?`<span><i style="border-radius:2px;background:#e9ecef;border:2px dotted #6b7480"></i>미참여</span>`:'')+(BPT.ln?(()=>{const s=new Set();for(const v of Object.values(BP))if(v&&v.G&&v.j!=='미참여')for(const b of Object.keys(v.G))if((v.b||[]).includes(b)&&(!BPT.f||BPT.f===b))s.add(b);return [...s].map(b=>`<span><i style="border-radius:2px;height:5px;width:20px;background:${bpCol(b)}"></i>${esc(b)}</span>`).join('');})():'')+(SH.size?`<span><i style="border-radius:2px;border:2px solid var(--frame)"></i>상세도 범위</span>`:'');}
 const panel=document.getElementById('panel'),pwrap=document.getElementById('pwrap'),pTog=document.getElementById('pToggle');
 const setPanel=open=>{if(open)pwrap.hidden=false;pwrap.classList.toggle('min',!open);pTog.textContent=open?'접기':'펼치기';pTog.setAttribute('aria-expanded',String(open));};
 pTog.addEventListener('click',()=>setPanel(pwrap.classList.contains('min')));
@@ -571,6 +685,7 @@ function showParcel(k,i){CUR='p'+k+i;const p=PC[k][i];selP={k,i};sel=null;setPan
   <dl><dt>지번</dt><dd>기린면 서리 ${esc(p[1])}</dd><dt>면적(도형)</dt><dd>${fmt(p[3])} ㎡</dd><dt>필지 안 관정</dt><dd>${ws.length?esc(ws.join(', ')):'없음'}</dd></dl>
   ${recs.length?`<p style="color:var(--ink);margin-top:10px"><b>기초조사 기록 ${recs.length}건</b></p>`+recs.map(r=>`<p style="margin:4px 0 0">· ${esc(r[0])}${r[1]?' — '+esc(r[1]):''} <span style="white-space:nowrap">(${esc(r[2])}, ${esc(r[3])})</span></p>`).join(''):(k==='gugeo'?'':srv==='소실'?'<p>현장 확인 결과 필지가 없어진(소실된) 곳입니다.</p>':srv==='미조사'?'<p>아직 기초조사를 하지 못한 구간(구거 23번 위쪽과 구거 23·26번 부근(50m 이내) 필지, 밭 363–366·845·846번)입니다.</p>':'<p>기초조사 기록이 없어 기준(논으로 조사된 곳만 논)에 따라 밭으로 분류했습니다.</p>')}
   <p>번호는 제공 자료의 필지 순번(CIRCLE_NO)입니다.</p>`;
+  panel.appendChild(bpPanel(k,i));
   if(k!=='gugeo'&&MODE==='srv')panel.appendChild(ovPanel(k,i));
   for(const tr of document.querySelectorAll('#tbl tbody tr'))tr.classList.remove('sel');
   buildStatic();draw();}
@@ -594,7 +709,7 @@ svg.addEventListener('pointermove',e=>{if(PT.has(e.pointerId))PT.set(e.pointerId
     const wx=v0.x+pinch.m0[0]/W*v0.w,wy=v0.y+(1-pinch.m0[1]/H)*v0.h,mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top,w=v0.w*sc,h=v0.h*sc;vb={x:wx-mx/W*w,y:wy-(1-my/H)*h,w,h};draw();return;}
   if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4){moved=true;VT=true;if(LOCW!==null&&FOLLOW){FOLLOW=false;locBtn('nof');}}const k=vb.w/box.clientWidth;vb.x=drag.vx-dx*k;vb.y=drag.vy+dy*k;draw();});
 svg.addEventListener('pointercancel',e=>{PT.delete(e.pointerId);if(PT.size<2)pinch=null;drag=null;svg.classList.remove('drag');});
-svg.addEventListener('pointerup',e=>{PT.delete(e.pointerId);if(pinch||PT.size){if(PT.size<2)pinch=null;drag=null;moved=true;if(!PT.size)svg.classList.remove('drag');return;}svg.classList.remove('drag');const d=drag;drag=null;if(moved||!d)return;const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('.w');if(c){if(!same('w'+c.dataset.n))showWell(Number(c.dataset.n),false);return;}const er=el&&el.closest('.er');if(er){if(!same('e'+er.dataset.i))showEros(Number(er.dataset.i));return;}const wq=el&&el.closest('.wq');if(wq){if(!same('q'+wq.dataset.i))showWq(Number(wq.dataset.i));return;}const sb=el&&el.closest('.sb');if(sb){if(!same('b'+sb.dataset.i))showSabang(Number(sb.dataset.i));return;}const sm=el&&el.closest('.sm');if(sm){if(!same('m'+sm.dataset.i))showSumun(Number(sm.dataset.i));return;}const dp=el&&el.closest('.dp');if(dp){if(!same('d'+dp.dataset.k))showDosu(Number(dp.dataset.k));return;}const ds=el&&el.closest('.ds');if(ds){if(!same('d-1'))showDosu(-1);return;}const g=el&&el.closest('.fr');if(g){openViewer(Number(g.dataset.f)+NFIX-1);return;}const pc=el&&el.closest('.pc');if(pc){if(!same('p'+pc.dataset.k+pc.dataset.i))showParcel(pc.dataset.k,Number(pc.dataset.i));return;}if(CUR||sel||selP)clearSel();});
+svg.addEventListener('pointerup',e=>{PT.delete(e.pointerId);if(pinch||PT.size){if(PT.size<2)pinch=null;drag=null;moved=true;if(!PT.size)svg.classList.remove('drag');return;}svg.classList.remove('drag');const d=drag;drag=null;if(moved||!d)return;if(ED&&PC){bpEdClick(e);return;}if(BR.on&&PC){const pc2=document.elementsFromPoint(e.clientX,e.clientY).find(x=>x.classList&&x.classList.contains('pc'));if(pc2){brushApply(pc2.dataset.k,Number(pc2.dataset.i));return;}}const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('.w');if(c){if(!same('w'+c.dataset.n))showWell(Number(c.dataset.n),false);return;}const er=el&&el.closest('.er');if(er){if(!same('e'+er.dataset.i))showEros(Number(er.dataset.i));return;}const wq=el&&el.closest('.wq');if(wq){if(!same('q'+wq.dataset.i))showWq(Number(wq.dataset.i));return;}const sb=el&&el.closest('.sb');if(sb){if(!same('b'+sb.dataset.i))showSabang(Number(sb.dataset.i));return;}const sm=el&&el.closest('.sm');if(sm){if(!same('m'+sm.dataset.i))showSumun(Number(sm.dataset.i));return;}const dp=el&&el.closest('.dp');if(dp){if(!same('d'+dp.dataset.k))showDosu(Number(dp.dataset.k));return;}const ds=el&&el.closest('.ds');if(ds){if(!same('d-1'))showDosu(-1);return;}const g=el&&el.closest('.fr');if(g){openViewer(Number(g.dataset.f)+NFIX-1);return;}const pc=el&&el.closest('.pc');if(pc){if(!same('p'+pc.dataset.k+pc.dataset.i))showParcel(pc.dataset.k,Number(pc.dataset.i));return;}if(CUR||sel||selP)clearSel();});
 document.getElementById('zin').onclick=()=>zoomAt(0.7,box.clientWidth/2,box.clientHeight/2);
 document.getElementById('zout').onclick=()=>zoomAt(1.43,box.clientWidth/2,box.clientHeight/2);
 
@@ -775,7 +890,7 @@ function syncStats(){if(!PC)return;const n={},a={};let D2J=0,D2O=0,chg=0,chgA=0,
   nEro:EROS.length,aEro:ha(EROS.reduce((s,e)=>s+e.a,0)),nEro1:e1.length,nEro2:e2.length};
  for(const el of document.querySelectorAll('[data-s]')){const v=V[el.dataset.s];if(v!==undefined)el.textContent=v;}
  if(MODE==='srv'){document.getElementById('nDap').textContent=(n['논']||0)+'필지';document.getElementById('nJeon').textContent=(n['밭']||0).toLocaleString()+'필지';}
- const M=window.ENTRIES_META,ui=document.getElementById('updInfo');if(ui)ui.textContent=M?`현장 기초조사 ${(window.ENTRIES||[]).length}건 반영 · 자동 갱신 ${M.updated}`+(AUTO.n?` · 새 기록 ${AUTO.n}건 자동 반영`:'')+(Object.keys(OV).length?` · 지목 수정 ${Object.keys(OV).length}건`:''):'';}
+ const M=window.ENTRIES_META,ui=document.getElementById('updInfo');if(ui)ui.textContent=M?`현장 기초조사 ${(window.ENTRIES||[]).length}건 반영 · 자동 갱신 ${M.updated}`+(AUTO.n?` · 새 기록 ${AUTO.n}건 자동 반영`:'')+(Object.keys(OV).length?` · 지목 수정 ${Object.keys(OV).length}건`:'')+(Object.keys(BP).length?` · 사업 참여·BMPs ${Object.keys(BP).length}필지 작성`:''):'';}
 function buildReport(){const R=document.getElementById('rpt');const q=sel=>document.querySelector(sel);const cl=sel=>{const el=q(sel);return el?el.cloneNode(true).outerHTML:'';};
  const today=new Date();const ds=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
  const svView=(bb,agOnly)=>{const v0={...vb},tg=T.wGen,ts=T.sat;if(agOnly)T.wGen=false;fit(bb);draw();
@@ -802,12 +917,293 @@ function buildReport(){const R=document.getElementById('rpt');const q=sel=>docum
  ${img('sapdo_05.jpg','삽도 5. 유수방향도')}${img('sapdo_06.jpg','삽도 6. 도수관로 계획 노선도')}${img('sapdo_07.jpg','삽도 7. 수질 조사지점 위치도 (계획안)')}${img('sapdo_08.jpg','삽도 8. 수문 위치도')}${img('sapdo_09.jpg','삽도 9. 사방댐 위치도')}
  <h2 class="pb">5. 개발이용관정 현황</h2>${strip(q('#analysis')?q('#analysis').innerHTML:'')}<h3>농업용 관정 (${W.filter(isAg).length}공)</h3><table><thead><tr><th>번호</th><th>허가·신고번호</th><th>소재지</th><th>용도</th><th>심도(m)</th><th>취수계획량(㎥/일)</th></tr></thead><tbody>${ag}</tbody></table>
  <figure>${svAg}<figcaption>그림 2. 농업용 관정 위치도 (농업용 ${W.filter(isAg).length}공, 번호는 관정 번호)</figcaption></figure>
- <h2 class="pb">6. 조사 및 결과 정리 방법</h2>${strip(q('#howto .wrap')?[...q('#howto .wrap').querySelectorAll('h3,.tbl')].map(e=>e.outerHTML).join(''):'')}
+ ${bpReport(6)}<h2 class="pb">${bpRows().length?7:6}. 조사 및 결과 정리 방법</h2>${strip(q('#howto .wrap')?[...q('#howto .wrap').querySelectorAll('h3,.tbl')].map(e=>e.outerHTML).join(''):'')}
  <p class="note" style="border-top:2px solid #0b3d6b;padding-top:6px;margin-top:14px">본 자료는 2026년 소양강댐 양지천 유역 농업비점오염저감 용역에서 (주)휴먼플래닛이 작성한 자료입니다. 작성자 이용현 과장 · 유선 042-381-0180 · 휴대폰 010-8384-0221 · leeyh890221@gmail.com · 보고서 작성 ${ds}</p>`;
  return R;}
 window.buildReport=buildReport;document.getElementById('btnPdf').addEventListener('click',()=>{buildReport();const imgs=[...document.querySelectorAll('#rpt img')];Promise.all(imgs.map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r;}))).then(()=>{const t=document.title;document.title='서리_GIS분석_보고서';window.print();setTimeout(()=>{document.title=t;},1000);});});
 
-fetch('parcels.json').then(r=>r.json()).then(j=>{PC=j;applyEntries();buildStatic();draw();ptable();pstats();ertable();syncStats();if(/[?&]locate=1/.test(location.search))locStart(false);else if(LOC&&LOCSEL){LOCSEL=false;locSelect();}}).catch(()=>{document.getElementById('legend').insertAdjacentHTML('beforeend','<span>필지 자료를 불러오지 못했습니다.</span>');});
+
+// ===== 사업 참여 필지 · BMPs 계획 (화면·그리기·물량·집계·엑셀) =====
+const bpBy=()=>{try{return localStorage.getItem('seori_gis_by')||'';}catch(e){return '';}};
+const bpSetBy=v=>{try{localStorage.setItem('seori_gis_by',v);}catch(e){}};
+const bpWhere=m=>m==='server'?'플랫폼에 저장됨':'이 브라우저에 저장됨';
+const m1=v=>(Math.round(v*10)/10).toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1});
+const qf=(q,u)=>q==null||q===''?'':`${Number(q).toLocaleString(undefined,{maximumFractionDigits:2})}${u||''}`;
+const bpChips=sel=>{const base=new Set(bpBase());const extra=bpAll().filter(b=>!base.has(b));const gs=BMPS.concat(extra.length?[{g:'기존 입력',items:extra}]:[]);
+  return gs.map(g=>`<div class="bpg2">${gs.length>1?`<span class="bpgl">${esc(g.g)}</span>`:''}<div class="bpchips">${g.items.map(b=>`<button type="button" data-b="${esc(b)}" aria-pressed="${sel.has(b)}"><i style="background:${bpCol(b)}"></i>${esc(b)}</button>`).join('')}</div></div>`).join('');};
+const bpGTxt=e=>e?`${BPGT[e.t]||''}${e.q!=null&&e.q!==''?' '+qf(e.q,e.u):''}`:'';
+const bpLinesTxt=(v,sep)=>(v.j==='미참여'?[]:(v.b||[])).map(b=>{const e=(v.G||{})[b];return e?`${b}(${BPGT[e.t]}${e.q!=null?' '+qf(e.q,e.u):''})`:b;}).join(sep||', ');
+let BPDR=null; // 그리기에서 돌아올 때 패널 입력값 유지
+function bpPanel(k,i){const p=PC[k][i],key=k+':'+p[0],v=BP[key];if(ED&&ED.key!==key)bpEdEnd();
+  const dr=BPDR&&BPDR.key===key?BPDR.d:null;BPDR=null;const src=dr||v||{};
+  let pj=src.j||null;const pb=new Set(src.b||[]);const pg=JSON.parse(JSON.stringify(src.G||{}));
+  const box=document.createElement('div');box.className='ovbox bpbox';
+  box.innerHTML=`<p class="ovh"><b>사업 참여 · BMPs</b>${v?`<span class="tag" style="background:${BPJC[v.j][0]};margin:0">${esc(v.j)}${v.j!=='미참여'&&(v.b||[]).length?' · BMPs '+v.b.length:''}</span>`:''}${dr?'<span class="tag" style="background:#c62828;margin:0">저장 전</span>':''}</p>
+  <p class="bpl">참여 여부</p><div class="ovseg bpj" role="group" aria-label="사업 참여 여부">${BPJ.map(j=>`<button type="button" data-j="${j}" aria-pressed="${pj===j}">${j}</button>`).join('')}</div>
+  <div class="bpbm"${pj==='미참여'?' hidden':''}><p class="bpl">적용할 BMPs <small>여러 개 고를 수 있습니다</small></p>${bpChips(pb)}
+  <p class="bpl">지도에 그리기 · 물량 <small>라인·폴리곤·필지 전체 중 골라 그리고 물량을 적습니다</small></p><div class="bplines"></div></div>
+  <input type="text" class="bpm" maxlength="120" placeholder="메모 (예: 농가 협의 내용, 시공 위치)" aria-label="메모" value="${esc(src.m||'')}">
+  <input type="text" class="bpby" maxlength="20" placeholder="작성자 (선택)" aria-label="작성자" value="${esc(dr&&src.by!=null?src.by:bpBy())}">
+  <div class="ovact"><button type="button" class="mini pri bpsave">저장</button>${v?'<button type="button" class="mini bpdel">지우기</button>':''}<span class="bpmsg" role="status"></span></div>
+  <p class="ovnote">${v?`${esc(v.at||'')}${v.by?' · '+esc(v.by):''} 작성 · 아래 ‘사업 참여 필지 · BMPs 계획’ 표와 보고서에 반영됩니다.`:'참여 여부와 BMPs를 고르고 저장하면 지도·BMPs 계획 표·엑셀·보고서에 바로 반영됩니다.'}</p>`;
+  const msg=box.querySelector('.bpmsg'),bm=box.querySelector('.bpbm'),lw=box.querySelector('.bplines');
+  const draft=()=>({j:pj,b:[...pb],m:box.querySelector('.bpm').value.trim(),by:box.querySelector('.bpby').value.trim(),G:pg});
+  const lines=()=>{const bs=[...pb];lw.innerHTML=bs.length?bs.map(b=>{const e=pg[b];return `<div class="bpln"><i style="background:${bpCol(b)}"></i><b>${esc(b)}</b><span>${e?esc(bpGTxt(e))+(e.t!=='parcel'?` · ${(e.g||[]).length}개`:''):'그리지 않음'}</span><button type="button" class="mini bpdraw" data-b="${esc(b)}">${e?'수정':'그리기 · 물량'}</button></div>`;}).join(''):'<p class="ovnote" style="margin:0!important">BMP를 고르면 BMP별로 지도에 그리고 물량을 적을 수 있습니다.</p>';
+    for(const x of lw.querySelectorAll('.bpdraw'))x.onclick=()=>bpEdStart(k,i,x.dataset.b,draft());};
+  lines();
+  for(const b of box.querySelectorAll('.bpj button'))b.onclick=()=>{pj=b.dataset.j;for(const x of box.querySelectorAll('.bpj button'))x.setAttribute('aria-pressed',String(x===b));bm.hidden=pj==='미참여';};
+  for(const b of box.querySelectorAll('.bpchips button'))b.onclick=()=>{const n=b.dataset.b;if(pb.has(n))pb.delete(n);else pb.add(n);b.setAttribute('aria-pressed',String(pb.has(n)));lines();};
+  const done=(m,ok)=>{bpRefresh();showParcel(k,i);const el=document.querySelector('#panel .bpmsg');if(el){el.textContent=m;el.style.color=ok?'#0a8f3c':'#c62828';}};
+  const fail=e=>{msg.style.color='#c62828';msg.textContent=e&&e.auth?'로그인한 사용자만 저장할 수 있습니다':'저장하지 못했습니다. 다시 시도해 주세요';};
+  box.querySelector('.bpsave').onclick=()=>{if(!pj){msg.style.color='#c62828';msg.textContent='참여 여부를 먼저 고르세요';return;}
+    const d=draft();bpSetBy(d.by);msg.style.color='';msg.textContent='저장 중…';saveBP(key,bpVal(d)).then(m=>done(`저장했습니다 · ${bpWhere(m)}`,true)).catch(fail);};
+  const del=box.querySelector('.bpdel');if(del)del.onclick=()=>{msg.style.color='';msg.textContent='지우는 중…';saveBP(key,null).then(m=>done(`지웠습니다 · ${bpWhere(m)}`,true)).catch(fail);};
+  return box;}
+const bpVal=d=>{const bs=d.j==='미참여'?[]:[...new Set(d.b)];const G={};if(d.j!=='미참여')for(const b of bs)if(d.G&&d.G[b])G[b]=d.G[b];
+  const o={j:d.j,b:bs,m:d.m||'',by:d.by||'',at:nowKST()};if(Object.keys(G).length)o.G=G;return o;};
+
+// --- 지도에 그리기 (필지 전체 / 라인 / 폴리곤) + 물량 ---
+const fl1=P=>P.flatMap(q=>[Math.round(q[0]*10)/10,Math.round(q[1]*10)/10]);
+function bpSides(p){const S=[];for(const poly of p[6])for(const r of poly){let P=[];for(let j=0;j+1<r.length;j+=2)P.push([r[j],r[j+1]]);
+  if(P.length>1&&P[0][0]===P[P.length-1][0]&&P[0][1]===P[P.length-1][1])P.pop();P=P.filter((q,j)=>j===0||q[0]!==P[j-1][0]||q[1]!==P[j-1][1]);const n=P.length;if(n<3)continue;
+  const hd=j=>{const a=P[j],b=P[(j+1)%n];return Math.atan2(b[1]-a[1],b[0]-a[0]);};let brk=[];
+  for(let j=0;j<n;j++){let d=Math.abs(hd(j)-hd((j-1+n)%n));if(d>Math.PI)d=2*Math.PI-d;if(d>0.5)brk.push(j);}
+  if(brk.length<2){brk=[0,1,2,3].map(q=>Math.floor(q*n/4)).filter((v,q,a)=>a.indexOf(v)===q);}
+  for(let q=0;q<brk.length;q++){const s=brk[q],e=brk[(q+1)%brk.length];const L=[P[s]];let j=s;do{j=(j+1)%n;L.push(P[j]);}while(j!==e);S.push(fl1(L));}}
+ return S;}
+function bpEdStart(k,i,bmp,d){const p=PC[k][i],key=k+':'+p[0];BR.on=false;brushBar();const sides=bpSides(p),keys=sides.map(f=>f.join(','));const e=(d.G||{})[bmp];
+  const sel=new Set(),freeL=[],polys=[];let t=e?e.t:'line';
+  if(e&&e.t==='line')for(const f of e.g||[]){const ix=keys.indexOf(f.join(','));if(ix>=0)sel.add(ix);else freeL.push(f);}
+  if(e&&e.t==='poly')for(const f of e.g||[])polys.push(f);
+  ED={key,k,i,bmp,d,t,lm:'side',sides,sel,freeL,polys,cur:[],q:e&&e.q!=null?e.q:'',u:e&&e.u||gDef(t),qa:e?!!e.qa:true};svg.classList.add('edit');
+  let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const poly of p[6])for(const r of poly)for(let j=0;j<r.length;j+=2){x0=Math.min(x0,r[j]);x1=Math.max(x1,r[j]);y0=Math.min(y0,r[j+1]);y1=Math.max(y1,r[j+1]);}
+  setPanel(true);bpEdPanel();VT=true;safeFit([x0,y0,x1,y1],0.45,120);buildStatic();draw();bpEdUpd();
+  document.getElementById('map-sec').scrollIntoView({behavior:'smooth',block:'nearest'});}
+const bpEdG=()=>{if(!ED)return [];if(ED.t==='parcel')return [];if(ED.t==='poly'){const o=ED.polys.slice();if(ED.cur.length>2)o.push(fl1(ED.cur));return o;}
+  const o=[...ED.sel].sort((a,b)=>a-b).map(s=>ED.sides[s]).concat(ED.freeL);if(ED.cur.length>1)o.push(fl1(ED.cur));return o;};
+const bpEdMeas=()=>ED.t==='parcel'?PC[ED.k][ED.i][3]:gMeas({t:ED.t,g:bpEdG()});
+const drawing=()=>ED&&(ED.t==='poly'||(ED.t==='line'&&ED.lm==='free'));
+function bpEdPanel(){const p=PC[ED.k][ED.i],col=bpCol(ED.bmp);
+  const hint=ED.t==='parcel'?'필지 전체에 적용합니다. 그릴 필요 없이 물량만 적고 저장하세요.':ED.t==='poly'?'지도에 점을 차례로 찍어 영역을 그립니다(필지 꼭짓점 가까이 찍으면 붙습니다). ‘폴리곤 닫기’로 하나를 마치고 다음 영역을 그릴 수 있습니다.':ED.lm==='side'?'지도에서 필지 경계선(점선)을 누르면 선택되고, 다시 누르면 해제됩니다. 꺾이는 곳마다 한 변으로 나뉩니다.':'지도에 점을 차례로 찍어 선을 그립니다(필지 꼭짓점 가까이 찍으면 붙습니다). 다른 선은 ‘선 끊기’ 뒤에 그리세요.';
+  panel.innerHTML=`<h3>${PK[ED.k].jm} ${esc(p[0])}번 · <span style="color:${col}">${esc(ED.bmp)}</span> 그리기</h3>
+  <div class="ovbox bpbox" style="margin-top:6px"><p class="bpl" style="margin-top:0!important">그리는 방식</p><div class="ovseg bpt" role="group" aria-label="그리는 방식">${['line','poly','parcel'].map(t=>`<button type="button" data-t="${t}" aria-pressed="${ED.t===t}">${BPGT[t]}</button>`).join('')}</div>
+  ${ED.t==='line'?`<div class="ovseg bplm" role="group" aria-label="라인 그리는 방법" style="margin-top:6px">${[['side','경계선 고르기'],['free','직접 그리기']].map(([m,n])=>`<button type="button" data-m="${m}" aria-pressed="${ED.lm===m}">${n}</button>`).join('')}</div>`:''}
+  <p class="ovnote">${hint}</p><p class="bpedlen" role="status"></p>
+  <p class="bpl">물량</p><div class="bpq"><input type="number" class="bpqv" min="0" step="any" inputmode="decimal" aria-label="물량" value="${esc(ED.q)}"><select class="bpqu" aria-label="단위">${BPU.map(u=>`<option${u===ED.u?' selected':''}>${u}</option>`).join('')}</select><label class="bpqa"><input type="checkbox" class="bpqac"${ED.qa?' checked':''}> 그린 크기로 자동 계산</label></div>
+  <div class="ovact"><button type="button" class="mini pri" data-a="ok">완료 · 저장</button>${drawing()?`<button type="button" class="mini" data-a="undo">점 되돌리기</button><button type="button" class="mini" data-a="cut">${ED.t==='poly'?'폴리곤 닫기':'선 끊기'}</button>`:''}${ED.t!=='parcel'?'<button type="button" class="mini" data-a="clr">모두 지우기</button>':''}<button type="button" class="mini" data-a="del">이 BMP 그림 삭제</button><button type="button" class="mini" data-a="no">취소</button></div></div>`;
+  const fin=()=>{if(ED.t==='poly'){if(ED.cur.length>2)ED.polys.push(fl1(ED.cur));}else if(ED.t==='line'&&ED.cur.length>1)ED.freeL.push(fl1(ED.cur));ED.cur=[];};
+  for(const b of panel.querySelectorAll('.bpt button'))b.onclick=()=>{fin();const was=ED.t;ED.t=b.dataset.t;if(ED.qa||ED.u===gDef(was))ED.u=gDef(ED.t);bpEdPanel();bpEdUpd();draw();};
+  for(const b of panel.querySelectorAll('.bplm button'))b.onclick=()=>{fin();ED.lm=b.dataset.m;bpEdPanel();bpEdUpd();draw();};
+  const qv=panel.querySelector('.bpqv'),qu=panel.querySelector('.bpqu'),qa=panel.querySelector('.bpqac');
+  qv.oninput=()=>{ED.q=qv.value;ED.qa=false;qa.checked=false;};qu.onchange=()=>{ED.u=qu.value;ED.qa=false;qa.checked=false;};qa.onchange=()=>{ED.qa=qa.checked;bpEdUpd();};
+  for(const b of panel.querySelectorAll('[data-a]'))b.onclick=()=>bpEdAct(b.dataset.a);}
+function bpEdAct(a){if(!ED)return;
+  if(a==='undo'){if(ED.cur.length)ED.cur.pop();else{const L=ED.t==='poly'?ED.polys:ED.freeL;if(L.length){const f=L.pop();ED.cur=[];for(let j=0;j+1<f.length;j+=2)ED.cur.push([f[j],f[j+1]]);ED.cur.pop();}}}
+  else if(a==='cut'){if(ED.t==='poly'){if(ED.cur.length>2)ED.polys.push(fl1(ED.cur));else if(ED.cur.length)ztip('폴리곤은 점이 3개 이상 필요합니다');}else if(ED.cur.length>1)ED.freeL.push(fl1(ED.cur));ED.cur=[];}
+  else if(a==='clr'){ED.sel.clear();ED.freeL=[];ED.polys=[];ED.cur=[];}
+  else if(a==='no'){const e=ED;BPDR={key:e.key,d:e.d};bpEdEnd();showParcel(e.k,e.i);return;}
+  else if(a==='ok'||a==='del'){const e=ED,d=e.d,g=bpEdG();d.G=d.G||{};let note;
+    if(a==='del'){delete d.G[e.bmp];note=`${e.bmp} 그림을 지웠습니다`;}
+    else{if(e.t!=='parcel'&&!g.length){ztip(e.t==='poly'?'영역을 그리거나 ‘필지 전체’를 고르세요':'라인을 고르거나 그리세요. ‘필지 전체’도 고를 수 있습니다');return;}
+      const qn=e.q===''||e.q==null?null:Number(e.q);d.G[e.bmp]={t:e.t,g,q:qn!=null&&isFinite(qn)?qn:null,u:e.u,qa:!!e.qa};note=`${e.bmp} ${BPGT[e.t]} 저장${d.G[e.bmp].q!=null?' · 물량 '+qf(d.G[e.bmp].q,e.u):''}`;}
+    if(!d.b.includes(e.bmp)&&a==='ok')d.b.push(e.bmp);if(!d.j||d.j==='미참여')d.j='참여';
+    bpSetBy(d.by||'');bpEdEnd();saveBP(e.key,bpVal(d)).then(m=>{bpRefresh();showParcel(e.k,e.i);const el=document.querySelector('#panel .bpmsg');if(el){el.textContent=`${note} · ${bpWhere(m)}`;el.style.color='#0a8f3c';}})
+      .catch(er=>{BPDR={key:e.key,d};showParcel(e.k,e.i);const el=document.querySelector('#panel .bpmsg');if(el){el.textContent=er&&er.auth?'로그인한 사용자만 저장할 수 있습니다':'저장하지 못했습니다';el.style.color='#c62828';}});return;}
+  bpEdUpd();draw();}
+function bpEdEnd(){ED=null;svg.classList.remove('edit');const b=document.getElementById('bpEdBar');if(b)b.hidden=true;buildStatic();draw();}
+function bpEdUpd(){if(!ED)return;const g=bpEdG(),ms=bpEdMeas();const mt=ED.t==='line'?`길이 ${m1(ms)} m · ${g.length}개 선`:ED.t==='poly'?`면적 ${m1(ms)} ㎡ · ${g.length}개 영역`:`필지 면적 ${fmt(ms)} ㎡`;
+  if(ED.qa){ED.u=gDef(ED.t);ED.q=Math.round(ms*10)/10;const qv=panel.querySelector('.bpqv'),qu=panel.querySelector('.bpqu');if(qv)qv.value=ED.q;if(qu)qu.value=ED.u;}
+  const el=panel.querySelector('.bpedlen');if(el)el.innerHTML=`그린 크기: <b>${mt}</b>`;
+  const bar=document.getElementById('bpEdBar');if(bar){bar.hidden=false;bar.style.background=bpCol(ED.bmp);document.getElementById('bpEdTxt').textContent=`${ED.bmp} · ${BPGT[ED.t]} · ${mt}`;}}
+function bpSnap(x,y){const R=svg.getBoundingClientRect(),tol=12*vb.w/R.width;let best=null,bd=tol;for(const f of ED.sides)for(let j=0;j+1<f.length;j+=2){const d=Math.hypot(f[j]-x,f[j+1]-y);if(d<bd){bd=d;best=[f[j],f[j+1]];}}return best||[x,y];}
+function bpEdClick(e){if(ED.t==='parcel'){ztip('필지 전체 방식은 그릴 필요가 없습니다. 물량을 적고 ‘완료 · 저장’을 누르세요');return;}
+  if(ED.t==='line'&&ED.lm==='side'){const t=document.elementsFromPoint(e.clientX,e.clientY).find(x=>x.classList&&x.classList.contains('edg'));if(!t){ztip('필지 경계선(점선)을 눌러 주세요');return;}const s=Number(t.dataset.s);if(ED.sel.has(s))ED.sel.delete(s);else ED.sel.add(s);}
+  else{const R=svg.getBoundingClientRect();ED.cur.push(bpSnap(vb.x+(e.clientX-R.left)/R.width*vb.w,vb.y+(1-(e.clientY-R.top)/R.height)*vb.h));}
+  bpEdUpd();draw();}
+function bpEdSvg(lw){if(!ED||!PC)return '';const col=bpCol(ED.bmp),p=PC[ED.k][ED.i];let h='',hit='',lab='';
+  if(ED.t==='parcel'){const d=p[6].map(poly=>poly.map(ringD).join('')).join('');return `<path d="${d}" fill-rule="evenodd" fill="${col}" fill-opacity=".35" stroke="#fff" stroke-width="${8*lw}" pointer-events="none"/><path d="${d}" fill-rule="evenodd" fill="none" stroke="${col}" stroke-width="${4*lw}" pointer-events="none"/>`;}
+  const side=ED.t==='line'&&ED.lm==='side';
+  ED.sides.forEach((f,s)=>{const d=lineD(f),on=ED.t==='line'&&ED.sel.has(s);
+    h+=on?`<path d="${d}" fill="none" stroke="#fff" stroke-width="${10*lw}" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/><path d="${d}" fill="none" stroke="${col}" stroke-width="${6*lw}" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`
+      :`<path d="${d}" fill="none" stroke="#fff" stroke-width="${4*lw}" stroke-opacity=".9" pointer-events="none"/><path d="${d}" fill="none" stroke="#1b2a38" stroke-width="${1.8*lw}" stroke-dasharray="${5*lw} ${3*lw}" pointer-events="none"/>`;
+    if(side)hit+=`<path class="edg" data-s="${s}" d="${d}" fill="none" stroke="transparent" stroke-width="${16*lw}" stroke-linecap="round" style="cursor:pointer"><title>${on?'선택 해제':'라인으로 선택'} · ${m1(lenF(f))}m</title></path>`;
+    if(on){const m=Math.floor(f.length/4)*2;lab+=`<text x="${f[m]}" y="${-f[m+1]-8*lw}" font-size="${11.5*lw}" font-weight="700" text-anchor="middle" fill="${col}" stroke="#fff" stroke-width="${3.5*lw}" paint-order="stroke" pointer-events="none">${m1(lenF(f))}m</text>`;}});
+  if(ED.t==='line')for(const f of ED.freeL){const d=lineD(f);h+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="${10*lw}" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/><path d="${d}" fill="none" stroke="${col}" stroke-width="${6*lw}" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`;}
+  if(ED.t==='poly')for(const f of ED.polys){const d=lineD(f)+'Z';h+=`<path d="${d}" fill="${col}" fill-opacity=".4" stroke="#fff" stroke-width="${6*lw}" stroke-linejoin="round" pointer-events="none"/><path d="${d}" fill="none" stroke="${col}" stroke-width="${3*lw}" stroke-linejoin="round" pointer-events="none"/>`;
+    let cx=0,cy=0;const n=f.length/2;for(let j=0;j<f.length;j+=2){cx+=f[j];cy+=f[j+1];}lab+=`<text x="${cx/n}" y="${-cy/n}" font-size="${11.5*lw}" font-weight="700" text-anchor="middle" fill="${col}" stroke="#fff" stroke-width="${3.5*lw}" paint-order="stroke" pointer-events="none">${m1(areaF(f))}㎡</text>`;}
+  if(ED.cur.length){const f=fl1(ED.cur);if(f.length>=4)h+=`<path d="${lineD(f)}${ED.t==='poly'&&f.length>=6?'Z':''}" fill="${ED.t==='poly'?col:'none'}" fill-opacity=".2" stroke="${col}" stroke-width="${4*lw}" stroke-dasharray="${8*lw} ${4*lw}" stroke-linecap="round" pointer-events="none"/>`;for(const q of ED.cur)h+=`<circle cx="${q[0]}" cy="${-q[1]}" r="${4.5*lw}" fill="#fff" stroke="${col}" stroke-width="${2.2*lw}" pointer-events="none"/>`;}
+  return h+hit+lab;}
+
+// --- 일괄 지정 (지도에서 필지를 차례로 눌러 같은 내용 저장) ---
+const BR={on:false,j:'참여',b:new Set()};
+function brushUI(){const jb=document.getElementById('brJ'),bb=document.getElementById('brB');if(!jb)return;
+  jb.innerHTML=BPJ.map(j=>`<button type="button" data-j="${j}" aria-pressed="${BR.j===j}">${j}</button>`).join('');
+  bb.innerHTML=bpChips(BR.b);bb.hidden=BR.j==='미참여';
+  for(const b of jb.querySelectorAll('button'))b.onclick=()=>{BR.j=b.dataset.j;brushUI();};
+  for(const b of bb.querySelectorAll('.bpchips button'))b.onclick=()=>{const n=b.dataset.b;if(BR.b.has(n))BR.b.delete(n);else BR.b.add(n);b.setAttribute('aria-pressed',String(BR.b.has(n)));brushBar();};
+  brushBar();}
+function brushBar(){const bar=document.getElementById('bpBar'),on=document.getElementById('brOn');if(!bar)return;bar.hidden=!BR.on;svg.classList.toggle('brush',BR.on);
+  if(on){on.setAttribute('aria-pressed',String(BR.on));on.textContent=BR.on?'일괄 지정 끝내기':'지도에서 일괄 지정 시작';}
+  const bs=[...BR.b];document.getElementById('bpBarTxt').textContent=BR.j+(BR.j!=='미참여'&&bs.length?' · '+bs.join(', '):BR.j==='미참여'?'':' · BMPs 없음');}
+function brushApply(k,i){const p=PC[k][i],key=k+':'+p[0],prev=BP[key];const bs=BR.j==='미참여'?[]:[...BR.b];
+  const same=prev&&prev.j===BR.j&&[...(prev.b||[])].sort().join('|')===[...bs].sort().join('|');
+  const val=same?null:bpVal({j:BR.j,b:bs,m:prev&&prev.m||'',by:bpBy(),G:prev&&prev.G||{}});
+  saveBP(key,val).then(()=>{bpRefresh();showParcel(k,i);ztip(same?`${PK[k].jm} ${p[0]}번 일괄 지정을 취소했습니다`:`${PK[k].jm} ${p[0]}번 → ${BR.j}${bs.length?' · BMPs '+bs.length+'개':''} 저장`);}).catch(e=>ztip(e&&e.auth?'로그인한 사용자만 저장할 수 있습니다':'저장하지 못했습니다'));}
+
+// --- 집계 ---
+const BPFORM=['논','밭','과수','축사','미분류','미조사','소실','구거'];
+const BPFG=['논','밭','과수','축사','기타'];const bpFg=f=>BPFG.includes(f)?f:'기타';
+const ha2=v=>Math.round((v||0)/100)/100;
+const qAdd=(o,e)=>{if(e&&e.q!=null&&isFinite(e.q)){const u=e.u||'';o[u]=(o[u]||0)+Number(e.q);}};
+const qTxt=o=>Object.entries(o||{}).map(([u,v])=>qf(Math.round(v*100)/100,u)).join(' · ');
+function bpRows(){const out=[];if(!PC)return out;for(const [key,v] of Object.entries(BP)){const i=bpIdx(key);if(i<0||!v)continue;const [k,no]=key.split(':'),p=PC[k][i];out.push({key,k,i,p,v,form:srvOf(k,no),cad:PK[k].jm});}
+  const jo={'참여':0,'협의 중':1,'미참여':2};out.sort((a,b)=>(jo[a.v.j]-jo[b.v.j])||BPFORM.indexOf(a.form)-BPFORM.indexOf(b.form)||a.cad.localeCompare(b.cad)||Number(a.p[0])-Number(b.p[0]));return out;}
+function bpAgg(){const rows=bpRows(),F={};const fr=f=>F[f]||(F[f]={tot:0,totA:0,n:{'참여':0,'협의 중':0,'미참여':0},a:{'참여':0,'협의 중':0,'미참여':0},bm:{},bq:{}});
+  for(const f of BPFORM)fr(f);
+  if(PC){for(const k of ['dap','jeon'])for(const p of PC[k]){const x=fr(srvOf(k,p[0]));x.tot++;x.totA+=p[3];}for(const p of PC.gugeo){const x=fr(srvOf('gugeo',p[0]));x.tot++;x.totA+=p[3];}}
+  const B={};const nb=()=>({n:0,a:0,q:{},ng:0,gt:{},nn:0,f:{},ji:[]});for(const b of bpAll())B[b]=nb();const units=new Set();
+  for(const r of rows){const x=fr(r.form);x.n[r.v.j]=(x.n[r.v.j]||0)+1;x.a[r.v.j]=(x.a[r.v.j]||0)+r.p[3];
+    if(r.v.j==='미참여')continue;for(const b of r.v.b||[]){const o=B[b]||(B[b]=nb());const e=(r.v.G||{})[b];
+      if(r.v.j==='참여'){o.n++;o.a+=r.p[3];if(e){o.ng++;o.gt[e.t]=(o.gt[e.t]||0)+1;qAdd(o.q,e);if(e.q!=null)units.add(e.u||'');}const g=bpFg(r.form);o.f[g]=(o.f[g]||0)+1;o.ji.push(r.p[1]);x.bm[b]=(x.bm[b]||0)+1;qAdd(x.bq[b]=x.bq[b]||{},e);}else o.nn++;}}
+  const uo=BPU.filter(u=>units.has(u)).concat([...units].filter(u=>!BPU.includes(u)));
+  return {rows,F,B,units:uo};}
+function bpFormRows(A){const out=[];const T0={tot:0,y:0,ya:0,n:0,x:0,u:0,bm:{},bq:{}};
+  for(const f of BPFORM){const x=A.F[f],w=x.n['참여']+x.n['협의 중']+x.n['미참여'];if((f==='소실')&&!w)continue;const isG=f==='구거';
+    const u=isG?null:Math.max(0,x.tot-w);const r={f:f==='미분류'?'미분류 (기타)':f,tot:isG?null:x.tot,y:x.n['참여'],ya:x.a['참여'],n:x.n['협의 중'],x:x.n['미참여'],u,rate:isG||!x.tot?null:x.n['참여']/x.tot,bm:Object.entries(x.bm).sort((a,b)=>b[1]-a[1]).map(([b,c])=>[b,c,x.bq[b]||{}])};out.push(r);
+    if(!isG){T0.tot+=x.tot;T0.u+=u;}T0.y+=r.y;T0.ya+=r.ya;T0.n+=r.n;T0.x+=r.x;for(const [b,c,q] of r.bm){T0.bm[b]=(T0.bm[b]||0)+c;const o=T0.bq[b]=T0.bq[b]||{};for(const [uu,v] of Object.entries(q))o[uu]=(o[uu]||0)+v;}}
+  T0.rate=T0.tot?T0.y/T0.tot:null;T0.bm=Object.entries(T0.bm).sort((a,b)=>b[1]-a[1]).map(([b,c])=>[b,c,T0.bq[b]||{}]);return {rows:out,tot:T0};}
+const bmTxt=bm=>bm.length?bm.map(([b,c,q])=>{const t=qTxt(q);return `${b} ${c}${t?` (${t})`:''}`;}).join(' · '):'–';
+const pct=v=>v==null?'–':(v*100).toFixed(1)+'%';
+const gtTxt=gt=>Object.entries(gt||{}).map(([t,c])=>`${BPGT[t]} ${c}`).join(' · ');
+
+const BPLF={f:'all'};
+function bpRender(){if(!PC)return;const A=bpAgg(),FR2=bpFormRows(A);
+  const c={nY:0,aY:0,nN:0,nX:0,nG:0};for(const r of A.rows){if(r.v.j==='참여'){c.nY++;c.aY+=r.p[3];}else if(r.v.j==='협의 중')c.nN++;else c.nX++;
+    if(r.v.j!=='미참여'&&r.v.G)for(const b of Object.keys(r.v.G))if((r.v.b||[]).includes(b))c.nG++;}
+  const V={nY:c.nY,aY:(c.aY/1e4).toFixed(1),nN:c.nN,nX:c.nX,nAll:A.rows.length,nG:c.nG};for(const el of document.querySelectorAll('[data-b]')){const v=V[el.dataset.b];if(v!==undefined)el.textContent=v;}
+  const sf=document.getElementById('bpF');if(sf){const cur=BPT.f;sf.innerHTML='<option value="">전체 BMPs</option>'+bpAll().map(b=>`<option value="${esc(b)}"${b===cur?' selected':''}>${esc(b)}${A.B[b]&&A.B[b].n?` (${A.B[b].n})`:''}</option>`).join('');}
+  const t1=document.querySelector('#bpStF tbody');if(t1){t1.innerHTML=FR2.rows.map(r=>`<tr><th>${esc(r.f)}</th><td>${r.tot==null?'–':r.tot.toLocaleString()}</td><td class="bpy">${r.y.toLocaleString()}</td><td>${ha2(r.ya).toFixed(2)}</td><td>${r.n}</td><td>${r.x}</td><td>${r.u==null?'–':r.u.toLocaleString()}</td><td>${pct(r.rate)}</td><td class="bmt">${esc(bmTxt(r.bm))}</td></tr>`).join('');
+    const t=FR2.tot;document.querySelector('#bpStF tfoot').innerHTML=`<tr><th>합계</th><td>${t.tot.toLocaleString()}</td><td class="bpy">${t.y.toLocaleString()}</td><td>${ha2(t.ya).toFixed(2)}</td><td>${t.n}</td><td>${t.x}</td><td>${t.u.toLocaleString()}</td><td>${pct(t.rate)}</td><td class="bmt">${esc(bmTxt(t.bm))}</td></tr>`;}
+  const t2=document.querySelector('#bpStB tbody');if(t2){const bl=bpAll();let S={n:0,a:0,q:{},ng:0,nn:0,f:{}};
+    t2.innerHTML=bl.map(b=>{const o=A.B[b]||{n:0,a:0,q:{},ng:0,gt:{},nn:0,f:{},ji:[]};S.n+=o.n;S.a+=o.a;S.ng+=o.ng;S.nn+=o.nn;for(const [u,v] of Object.entries(o.q))S.q[u]=(S.q[u]||0)+v;for(const g of BPFG)S.f[g]=(S.f[g]||0)+(o.f[g]||0);
+      return `<tr data-b="${esc(b)}" tabindex="0" class="${o.n||o.nn?'':'z'}"><th><i class="bpdot" style="background:${bpCol(b)}"></i>${esc(b)}</th><td class="bpy">${o.n}</td><td>${ha2(o.a).toFixed(2)}</td><td class="bpqt">${esc(qTxt(o.q))||'–'}</td><td>${o.ng}${o.ng?` <small>(${esc(gtTxt(o.gt))})</small>`:''}</td><td>${o.nn}</td>${BPFG.map(g=>`<td>${o.f[g]||0}</td>`).join('')}<td class="bmt">${o.ji.length?esc(o.ji.slice(0,12).join(', ')+(o.ji.length>12?` 외 ${o.ji.length-12}필지`:'')):'–'}</td></tr>`;}).join('');
+    document.querySelector('#bpStB tfoot').innerHTML=`<tr><th>합계 (중복 포함)</th><td class="bpy">${S.n}</td><td>${ha2(S.a).toFixed(2)}</td><td class="bpqt">${esc(qTxt(S.q))||'–'}</td><td>${S.ng}</td><td>${S.nn}</td>${BPFG.map(g=>`<td>${S.f[g]||0}</td>`).join('')}<td></td></tr>`;}
+  const s=(document.getElementById('bpq')||{value:''}).value.trim();const rows=A.rows.filter(r=>(BPLF.f==='all'||r.v.j===BPLF.f)&&(!s||[r.cad+' '+r.p[0],r.p[1],r.p[2],(r.v.b||[]).join(' '),r.v.m||''].join(' ').includes(s)));
+  const t3=document.querySelector('#bptbl tbody');if(t3)t3.innerHTML=rows.map((r,n)=>`<tr data-k="${r.k}" data-i="${r.i}" tabindex="0"><td data-l="번호" class="n">${n+1}</td><td data-l="필지">${r.cad} ${esc(r.p[0])}</td><td data-l="지번">서리 ${esc(r.p[1])}</td><td data-l="형태(조사 결과)">${esc(r.form)}</td><td class="n" data-l="면적(㎡)">${fmt(r.p[3])}</td><td data-l="참여 여부"><span class="tag" style="background:${BPJC[r.v.j][0]};margin:0">${esc(r.v.j)}</span></td><td data-l="적용 BMPs · 물량">${esc(bpLinesTxt(r.v))||'–'}</td><td data-l="메모">${esc(r.v.m||'')||'–'}</td><td data-l="작성">${esc(r.v.at||'')}${r.v.by?' · '+esc(r.v.by):''}</td></tr>`).join('')||`<tr><td colspan="9">${A.rows.length?'조건에 맞는 필지가 없습니다.':'아직 작성한 필지가 없습니다. 지도에서 필지를 누르고 ‘사업 참여 · BMPs’를 저장해 보세요.'}</td></tr>`;
+  const cn=document.getElementById('bpcnt');if(cn)cn.textContent=`${rows.length.toLocaleString()}필지`;
+  return A;}
+function bpRefresh(){BPI=null;bpRender();buildStatic();draw();legend();if(typeof syncStats==='function')syncStats();}
+
+// --- 엑셀(.xlsx) 내려받기: 외부 라이브러리 없이 브라우저에서 바로 만듭니다 ---
+const XL=(()=>{const T=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;T[n]=c>>>0;}
+  const crc=u=>{let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=T[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;};const enc=new TextEncoder();
+  const zip=files=>{const parts=[],cen=[];let off=0;for(const f of files){const nm=enc.encode(f.name),d=enc.encode(f.data),c=crc(d);
+      const l=new DataView(new ArrayBuffer(30));l.setUint32(0,0x04034b50,true);l.setUint16(4,20,true);l.setUint16(6,0x0800,true);l.setUint16(12,0x21,true);l.setUint32(14,c,true);l.setUint32(18,d.length,true);l.setUint32(22,d.length,true);l.setUint16(26,nm.length,true);parts.push(new Uint8Array(l.buffer),nm,d);
+      const h=new DataView(new ArrayBuffer(46));h.setUint32(0,0x02014b50,true);h.setUint16(4,20,true);h.setUint16(6,20,true);h.setUint16(8,0x0800,true);h.setUint16(14,0x21,true);h.setUint32(16,c,true);h.setUint32(20,d.length,true);h.setUint32(24,d.length,true);h.setUint16(28,nm.length,true);h.setUint32(42,off,true);cen.push(new Uint8Array(h.buffer),nm);off+=30+nm.length+d.length;}
+    const cs=cen.reduce((s,a)=>s+a.length,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+    return new Blob([...parts,...cen,new Uint8Array(e.buffer)],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});};
+  const xe=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g,'');
+  const col=n=>{let s='';n++;while(n){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;};
+  const sheet=({rows,widths,freeze,merges})=>{let x='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">';
+    if(freeze)x+=`<sheetViews><sheetView workbookViewId="0"><pane ySplit="${freeze}" topLeftCell="A${freeze+1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>`;
+    if(widths)x+='<cols>'+widths.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join('')+'</cols>';
+    x+='<sheetData>';rows.forEach((r,ri)=>{x+=`<row r="${ri+1}">`;(r||[]).forEach((c,ci)=>{const o=c!==null&&typeof c==='object'?c:{v:c},ref=col(ci)+(ri+1),s=o.s?` s="${o.s}"`:'';
+      if(o.v==null||o.v===''){if(o.s)x+=`<c r="${ref}"${s}/>`;return;}
+      if(typeof o.v==='number'&&isFinite(o.v))x+=`<c r="${ref}"${s}><v>${o.v}</v></c>`;else x+=`<c r="${ref}"${s} t="inlineStr"><is><t xml:space="preserve">${xe(o.v)}</t></is></c>`;});x+='</row>';});
+    x+='</sheetData>';if(merges&&merges.length)x+=`<mergeCells count="${merges.length}">${merges.map(m=>`<mergeCell ref="${m}"/>`).join('')}</mergeCells>`;return x+'</worksheet>';};
+  const styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="4"><numFmt numFmtId="164" formatCode="#,##0"/><numFmt numFmtId="165" formatCode="#,##0.00"/><numFmt numFmtId="166" formatCode="0.0%"/><numFmt numFmtId="167" formatCode="#,##0.0"/></numFmts>'
+    +'<fonts count="4"><font><sz val="10"/><name val="맑은 고딕"/><family val="2"/></font><font><b/><sz val="10"/><name val="맑은 고딕"/><family val="2"/></font><font><b/><sz val="14"/><name val="맑은 고딕"/><family val="2"/></font><font><sz val="9"/><color rgb="FF5A6977"/><name val="맑은 고딕"/><family val="2"/></font></fonts>'
+    +'<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFDCE8F4"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFE6F4EA"/><bgColor indexed="64"/></patternFill></fill></fills>'
+    +'<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFA6B0BB"/></left><right style="thin"><color rgb="FFA6B0BB"/></right><top style="thin"><color rgb="FFA6B0BB"/></top><bottom style="thin"><color rgb="FFA6B0BB"/></bottom><diagonal/></border></borders>'
+    +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="14">'
+    +'<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
+    +'<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+    +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>'
+    +'<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment vertical="center" wrapText="1"/></xf>'
+    +'<xf numFmtId="164" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment vertical="center"/></xf>'
+    +'<xf numFmtId="165" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment vertical="center"/></xf>'
+    +'<xf numFmtId="0" fontId="1" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment vertical="center" wrapText="1"/></xf>'
+    +'<xf numFmtId="164" fontId="1" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"/>'
+    +'<xf numFmtId="165" fontId="1" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"/>'
+    +'<xf numFmtId="166" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/>'
+    +'<xf numFmtId="166" fontId="1" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"/>'
+    +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/>'
+    +'<xf numFmtId="167" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment vertical="center"/></xf>'
+    +'<xf numFmtId="167" fontId="1" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"/>'
+    +'</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+  const book=sheets=>{const f=[];
+    f.push({name:'[Content_Types].xml',data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>'+sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')+'</Types>'});
+    f.push({name:'_rels/.rels',data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'});
+    f.push({name:'xl/workbook.xml',data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map((s,i)=>`<sheet name="${xe(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')+'</sheets></workbook>'});
+    f.push({name:'xl/_rels/workbook.xml.rels',data:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')+`<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`});
+    f.push({name:'xl/styles.xml',data:styles});sheets.forEach((s,i)=>f.push({name:`xl/worksheets/sheet${i+1}.xml`,data:sheet(s)}));return zip(f);};
+  return {book,col};})();
+
+function bpXlsx(){const A=bpAgg(),FR2=bpFormRows(A),now=nowKST(),bl=bpAll(),U=A.units;const H=v=>({v,s:1}),S=v=>({v,s:3}),N=v=>({v:v==null?'–':v,s:v==null?3:4}),D=v=>({v,s:5}),M=v=>({v:Math.round(v*10)/10,s:12}),Q=v=>v==null||v===''?{v:'',s:3}:{v:Number(v),s:5},P=v=>v==null?{v:'–',s:3}:{v,s:9};
+  const head=t=>[[{v:t,s:2}],[{v:`양지천 유역(인제군 기린면 서리) · 작성 ${now} · 작성 필지 ${A.rows.length}필지`,s:11}],[]];
+  const r1=head('사업 참여 필지 현황 (형태별)');r1.push(['형태(조사 결과)','전체 필지','참여 개소','참여 면적(ha)','협의 중','미참여','미정','참여율(개소)','적용 BMPs (참여 필지 개소 · 물량)'].map(H));
+  for(const r of FR2.rows)r1.push([S(r.f),N(r.tot),N(r.y),D(ha2(r.ya)),N(r.n),N(r.x),N(r.u),P(r.rate),S(bmTxt(r.bm))]);
+  const t=FR2.tot;r1.push([{v:'합계',s:6},{v:t.tot,s:7},{v:t.y,s:7},{v:ha2(t.ya),s:8},{v:t.n,s:7},{v:t.x,s:7},{v:t.u,s:7},t.rate==null?{v:'–',s:6}:{v:t.rate,s:10},{v:bmTxt(t.bm),s:6}]);
+  r1.push([],[{v:'· 형태는 기초조사 결과(지목 수정 반영) 기준입니다. 구거는 BMPs를 넣은 필지만 세며 전체·미정·합계 전체에서 뺍니다.',s:11}],[{v:'· 미정 = 전체 필지 − (참여 + 협의 중 + 미참여). 물량은 필지마다 입력한 값(단위별 합계)입니다.',s:11}]);
+  const r2=head('BMP별 적용 현황');r2.push(['BMP','참여 개소','참여 면적(ha)',...U.map(u=>`물량 (${u})`),'지도에 그린 개소','그린 방식','협의 중 개소',...BPFG.map(g=>`${g} (개소)`),'대상 필지 (서리, 참여)'].map(H));const Sx={n:0,a:0,q:{},ng:0,nn:0,f:{}};
+  for(const b of bl){const o=A.B[b]||{n:0,a:0,q:{},ng:0,gt:{},nn:0,f:{},ji:[]};Sx.n+=o.n;Sx.a+=o.a;Sx.ng+=o.ng;Sx.nn+=o.nn;for(const [u,v] of Object.entries(o.q))Sx.q[u]=(Sx.q[u]||0)+v;for(const g of BPFG)Sx.f[g]=(Sx.f[g]||0)+(o.f[g]||0);
+    r2.push([S(b),N(o.n),D(ha2(o.a)),...U.map(u=>o.q[u]!=null?D(Math.round(o.q[u]*100)/100):{v:'',s:3}),N(o.ng),S(gtTxt(o.gt)),N(o.nn),...BPFG.map(g=>N(o.f[g]||0)),S(o.ji.join(', '))]);}
+  r2.push([{v:'합계 (중복 포함)',s:6},{v:Sx.n,s:7},{v:ha2(Sx.a),s:8},...U.map(u=>({v:Math.round((Sx.q[u]||0)*100)/100,s:8})),{v:Sx.ng,s:7},{v:'',s:6},{v:Sx.nn,s:7},...BPFG.map(g=>({v:Sx.f[g]||0,s:7})),{v:'',s:6}]);
+  if(!U.length)r2.push([],[{v:'· 아직 입력한 물량이 없습니다. 필지의 ‘그리기 · 물량’에서 입력하면 단위별 물량 열이 생깁니다.',s:11}]);
+  const r3=head('필지별 사업 참여 · BMPs 목록');r3.push(['번호','PNU','지번 (서리)','지적도 지목','필지 번호','형태(조사 결과)','면적(㎡)','참여 여부','적용 BMPs','메모','작성자','작성 일시',...bl.flatMap(b=>[`${b}\n그린 방식`,`${b}\n물량`,`${b}\n단위`])].map(H));
+  A.rows.forEach((r,n)=>{const bs=r.v.j==='미참여'?[]:(r.v.b||[]);r3.push([N(n+1),S(String(r.p[2])),S(r.p[1]),S(r.cad),S(String(r.p[0])),S(r.form),N(r.p[3]),S(r.v.j),S(bs.join(', ')),S(r.v.m||''),S(r.v.by||''),S(r.v.at||''),...bl.flatMap(b=>{if(!bs.includes(b))return [{v:'',s:3},{v:'',s:3},{v:'',s:3}];const e=(r.v.G||{})[b];return e?[S(BPGT[e.t]),Q(e.q),S(e.q!=null?e.u||'':'')]:[S('● (그리지 않음)'),{v:'',s:3},{v:'',s:3}];})]);});
+  if(!A.rows.length)r3.push([{v:'아직 작성한 필지가 없습니다.',s:3}]);
+  const wkt=(e,p)=>{const ring=f=>{const a=[];for(let j=0;j+1<f.length;j+=2)a.push(f[j]+' '+f[j+1]);return a;};
+    if(e.t==='parcel')return 'MULTIPOLYGON('+p[6].map(poly=>'('+poly.map(r=>'('+ring(r).join(', ')+')').join(', ')+')').join(', ')+')';return null;};
+  const r4=head('BMP 도형 목록 (좌표: EPSG:5186)');r4.push(['번호','지번 (서리)','필지','형태','참여 여부','BMP','그린 방식','도형 번호','길이(m)','면적(㎡)','꼭짓점 수','물량 (이 필지 BMP 전체)','단위','WKT (GIS 불러오기용)'].map(H));let ln=0;
+  for(const r of A.rows){if(r.v.j==='미참여'||!r.v.G)continue;for(const b of r.v.b||[]){const e=r.v.G[b];if(!e)continue;
+    if(e.t==='parcel'){ln++;r4.push([N(ln),S(r.p[1]),S(`${r.cad} ${r.p[0]}`),S(r.form),S(r.v.j),S(b),S(BPGT[e.t]),N(1),{v:'',s:3},N(r.p[3]),{v:'',s:3},Q(e.q),S(e.q!=null?e.u||'':''),S(wkt(e,r.p))]);continue;}
+    (e.g||[]).forEach((f,q)=>{ln++;const pts=[];for(let j=0;j+1<f.length;j+=2)pts.push(f[j]+' '+f[j+1]);const isP=e.t==='poly';
+      r4.push([N(ln),S(r.p[1]),S(`${r.cad} ${r.p[0]}`),S(r.form),S(r.v.j),S(b),S(BPGT[e.t]),N(q+1),isP?{v:'',s:3}:M(lenF(f)),isP?M(areaF(f)):{v:'',s:3},N(pts.length),q===0?Q(e.q):{v:'',s:3},S(q===0&&e.q!=null?e.u||'':''),S(isP?`POLYGON((${pts.concat([pts[0]]).join(', ')}))`:`LINESTRING(${pts.join(', ')})`)]);});}}
+  if(!ln)r4.push([{v:'아직 지도에 그린 BMP가 없습니다.',s:3}]);
+  const w2=3+U.length+4+BPFG.length;
+  const blob=XL.book([
+    {name:'형태별 참여 현황',rows:r1,widths:[16,10,10,13,9,9,9,12,64],freeze:4,merges:['A1:I1','A2:I2']},
+    {name:'BMP별 적용 현황',rows:r2,widths:[14,10,13,...U.map(()=>12),12,18,11,...BPFG.map(()=>9),60],freeze:4,merges:[`A1:${XL.col(w2-1)}1`,`A2:${XL.col(w2-1)}2`]},
+    {name:'필지별 목록',rows:r3,widths:[6,21,13,9,9,12,10,9,30,30,10,16,...bl.flatMap(()=>[11,10,7])],freeze:4,merges:['A1:L1','A2:L2']},
+    {name:'BMP 도형 목록',rows:r4,widths:[6,13,10,9,9,12,10,9,10,10,9,14,7,80],freeze:4,merges:['A1:N1','A2:N2']}]);
+  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=`서리_사업참여필지_BMPs현황_${now.slice(0,10)}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000);return A.rows.length;}
+window.bpXlsx=bpXlsx;
+
+// --- 보고서 PDF용 절 ---
+function bpReport(n){const A=bpAgg();if(!A.rows.length)return '';const st=h=>h.replace(/ id="[^"]*"/g,'').replace(/ tabindex="0"/g,'').replace(/ data-[a-z]+="[^"]*"/g,'');
+  const q=s=>{const e=document.querySelector(s);return e?st(e.outerHTML):'';};const ls=A.rows.filter(r=>r.v.j!=='미참여');
+  return `<h2 class="pb">${n}. 사업 참여 필지 · BMPs 계획</h2><p>지도에서 필지별로 사업 참여 여부, 적용할 BMPs와 위치(라인·폴리곤·필지 전체), 물량을 정리한 결과입니다 (작성 ${A.rows.length}필지 · 보고서 작성 시점 기준).</p><h3>형태별 사업 참여 현황</h3>${q('#bpStF')}<h3>BMP별 적용 현황</h3>${q('#bpStB')}
+  <h3>참여·협의 중 필지 목록 (${ls.length}필지)</h3><table><thead><tr><th>필지</th><th>지번</th><th>형태</th><th>면적(㎡)</th><th>참여 여부</th><th>적용 BMPs · 물량</th><th>메모</th></tr></thead><tbody>${ls.map(r=>`<tr><td>${r.cad} ${esc(r.p[0])}</td><td>서리 ${esc(r.p[1])}</td><td>${esc(r.form)}</td><td>${fmt(r.p[3])}</td><td>${esc(r.v.j)}</td><td>${esc(bpLinesTxt(r.v))||'–'}</td><td>${esc(r.v.m||'')}</td></tr>`).join('')}</tbody></table>`;}
+
+// --- 이벤트 연결 ---
+{const on=(id,ev,f)=>{const e=document.getElementById(id);if(e)e.addEventListener(ev,f);};
+ for(const [id,k] of [['tBpY','y'],['tBpN','n'],['tBpX','x'],['tBpL','ln']])on(id,'change',e=>{BPT[k]=e.target.checked;legend();buildStatic();draw();});
+ on('bpF','change',e=>{BPT.f=e.target.value;buildStatic();draw();legend();if(BPT.f)ztip(`‘${BPT.f}’ 적용 필지만 표시`);});
+ on('brOn','click',()=>{if(ED)bpEdAct('no');BR.on=!BR.on;if(BR.on){for(const id of ['tBpY','tBpN','tBpX']){const c=document.getElementById(id);if(c&&!c.checked){c.checked=true;c.dispatchEvent(new Event('change',{bubbles:true}));}}ztip('지도에서 필지를 누르면 바로 저장됩니다');}brushBar();});
+ on('bpBarOff','click',()=>{BR.on=false;brushBar();});
+ on('bpEdOk','click',()=>bpEdAct('ok'));on('bpEdNo','click',()=>bpEdAct('no'));
+ document.addEventListener('keydown',e=>{if(!ED)return;if(e.key==='Escape')bpEdAct('no');else if(e.key==='Enter'&&drawing()&&e.target===document.body)bpEdAct('cut');});
+ for(const b of document.querySelectorAll('#bpLf button'))b.onclick=()=>{BPLF.f=b.dataset.f;for(const x of document.querySelectorAll('#bpLf button'))x.setAttribute('aria-pressed',String(x===b));bpRender();};
+ on('bpq','input',bpRender);
+ const pick=tr=>{if(!tr||!tr.dataset.k)return;const k=tr.dataset.k,i=Number(tr.dataset.i),p=PC[k][i];let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const poly of p[6])for(const r of poly)for(let j=0;j<r.length;j+=2){x0=Math.min(x0,r[j]);x1=Math.max(x1,r[j]);y0=Math.min(y0,r[j+1]);y1=Math.max(y1,r[j+1]);}showParcel(k,i);VT=true;safeFit([x0,y0,x1,y1],0.6,160);draw();document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
+ const tb=document.querySelector('#bptbl tbody');if(tb){tb.addEventListener('click',e=>pick(e.target.closest('tr')));tb.addEventListener('keydown',e=>{if(e.key==='Enter')pick(e.target.closest('tr'));});}
+ const bb=document.querySelector('#bpStB tbody');const bpk=tr=>{if(!tr||tr.dataset.b===undefined)return;const s=document.getElementById('bpF');BPT.f=BPT.f===tr.dataset.b?'':tr.dataset.b;if(s)s.value=BPT.f;buildStatic();draw();legend();ztip(BPT.f?`‘${BPT.f}’ 적용 필지만 지도에 표시`:'BMP 필터를 껐습니다');document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
+ if(bb){bb.addEventListener('click',e=>bpk(e.target.closest('tr')));bb.addEventListener('keydown',e=>{if(e.key==='Enter')bpk(e.target.closest('tr'));});}
+ const st=()=>document.getElementById('bpcnt');
+ on('bpXls','click',()=>{try{const n=bpXlsx();st().textContent=`엑셀 저장됨 · 작성 ${n}필지`;}catch(e){st().textContent='엑셀을 만들지 못했습니다';}});
+ on('bpExp','click',()=>{const n=Object.keys(BP).length;if(!n){st().textContent='작성한 내용이 없습니다';return;}ovDL(`서리_BMPs계획_${nowKST().slice(0,10)}.json`,JSON.stringify({site:'soyang',layer:'seori-bmp',exported:nowKST(),bmps:bpAll(),data:BP},null,1));st().textContent=`${n}필지 내보냄`;});
+ on('bpImp','click',()=>document.getElementById('bpFile').click());
+ on('bpFile','change',async e=>{const fi=e.target,f=fi.files[0];fi.value='';if(!f)return;try{const o=JSON.parse(await f.text()),d=o.data||o;let n=0,bad=0;
+   const okG=G=>{const o2={};if(G&&typeof G==='object')for(const [b,x] of Object.entries(G)){if(!x||!BPGT[x.t])continue;const g=Array.isArray(x.g)?x.g.filter(a=>Array.isArray(a)&&a.length>=4&&a.length%2===0&&a.every(v=>typeof v==='number'&&isFinite(v))):[];if(x.t!=='parcel'&&!g.length)continue;
+     const q=x.q==null||x.q===''?null:Number(x.q);o2[String(b).slice(0,30)]={t:x.t,g:x.t==='parcel'?[]:g,q:q!=null&&isFinite(q)?q:null,u:String(x.u||gDef(x.t)).slice(0,8),qa:!!x.qa};}return o2;};
+   for(const [key,v] of Object.entries(d)){if(!/^(dap|jeon|gugeo):\d+$/.test(key)||!v||!BPJ.includes(v.j)||bpIdx(key)<0){bad++;continue;}
+     try{const val={j:v.j,b:Array.isArray(v.b)?v.b.map(s=>String(s).slice(0,30)).filter(Boolean):[],m:String(v.m||'').slice(0,120),by:String(v.by||'').slice(0,20),at:v.at||nowKST()};const G=okG(v.G);if(Object.keys(G).length)val.G=G;await saveBP(key,val);n++;}catch(er){bad++;if(er&&er.auth)break;}}
+   bpRefresh();brushUI();st().textContent=`${n}필지 불러옴${bad?` · ${bad}건 제외`:''}`;}catch(er){st().textContent='불러오지 못했습니다 (JSON 파일 확인)';}});
+ brushUI();}
+window.__bp={BR,BPT,get BP(){return BP;},get ED(){return ED;},brushUI,brushApply,bpRender,bpAgg,bpEdStart,bpEdAct,bpSides};
+
+fetch('parcels.json').then(r=>r.json()).then(j=>{PC=j;applyEntries();buildStatic();draw();ptable();pstats();ertable();syncStats();BPI=null;bpRender();brushUI();legend();if(/[?&]locate=1/.test(location.search))locStart(false);else if(LOC&&LOCSEL){LOCSEL=false;locSelect();}}).catch(()=>{document.getElementById('legend').insertAdjacentHTML('beforeend','<span>필지 자료를 불러오지 못했습니다.</span>');});
 }
 </script>
 <div id="rpt"></div>
