@@ -31,13 +31,13 @@ document.getElementById('f').addEventListener('load', function () {
     }
     var c = d.querySelector('section.corp');
     if (c) {
-      var id = c.querySelector('.corp-id'), b = c.querySelector('.corp-bot');
-      if (id) id.remove();
-      if (b) b.remove();
-      c.querySelectorAll('.corp-dl > div').forEach(function (r) {
-        var t = r.querySelector('dt').textContent.trim();
-        if (t !== '작성자' && t !== '작성자 연락처') r.remove();
-      });
+      var cw = c.querySelector('.wrap');
+      cw.innerHTML = '<p style="margin:0;font-size:14px;line-height:1.7">작성자 <b style="color:#fff">이용현 과장</b>'
+        + ' <span style="opacity:.5;margin:0 6px">|</span> 유선 <a href="tel:042-381-0180">042-381-0180</a>'
+        + ' <span style="opacity:.5;margin:0 6px">|</span> 휴대폰 <a href="tel:010-8384-0221">010-8384-0221</a>'
+        + ' <span style="opacity:.5;margin:0 6px">|</span> <a href="mailto:leeyh890221@gmail.com">leeyh890221@gmail.com</a></p>';
+      c.style.paddingTop = '18px';
+      c.style.paddingBottom = '18px';
       c.setAttribute('aria-label', '작성자 정보');
     }
   } catch (e) {}
