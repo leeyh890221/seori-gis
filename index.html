@@ -111,7 +111,7 @@ h2{font-size:24px;line-height:1.25;margin:0 0 6px}
 .gal figure{flex:0 0 min(420px,82vw);margin:0;scroll-snap-align:start;cursor:pointer}
 .gal img{width:100%;aspect-ratio:1457/783;object-fit:cover;border:1px solid var(--line);border-radius:4px;display:block;background:var(--soft)}
 .gal figcaption{font-size:14px;margin-top:6px}
-.galnav{display:flex;gap:8px;margin-bottom:12px}
+.galnav{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .viewer{position:fixed;inset:0;background:rgba(5,15,25,.86);display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;z-index:9}
 .viewer.on{display:flex}
 .viewer img{max-width:100%;max-height:78vh;background:#fff;border-radius:4px}
@@ -332,8 +332,8 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 
 <section class="band" style="background:var(--soft)" id="sapdo"><div class="wrap">
   <h2>삽도 21장</h2>
-  <p class="sec-sub">농경지 이용(논·과수·축사), 토사유실 중점관리구간, 유수방향, 도수관로·수질 조사지점·수문·사방댐, 관정 상세도 12장입니다. 그림을 누르면 크게 봅니다.</p>
-  <div class="galnav"><button class="btn" id="gPrev" aria-label="이전 삽도">‹ 이전</button><button class="btn" id="gNext" aria-label="다음 삽도">다음 ›</button></div>
+  <p class="sec-sub">농경지 이용(논·과수·축사), 토사유실 중점관리구간, 유수방향, 도수관로·수질 조사지점·수문·사방댐, 관정 상세도 12장입니다. 그림을 누르면 크게 보고, 크게 보기 화면의 'PNG 저장'으로 한 장씩 내려받을 수 있습니다.</p>
+  <div class="galnav"><button class="btn" id="gPrev" aria-label="이전 삽도">‹ 이전</button><button class="btn" id="gNext" aria-label="다음 삽도">다음 ›</button><button class="btn" id="gPngAll" style="margin-left:auto">전체 PNG 저장 (ZIP)</button></div>
   <div class="gal" id="gal"></div>
 </div></section>
 
@@ -448,7 +448,7 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 </div></section>
 
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="삽도 크게 보기">
-  <div class="bar"><span id="vTitle"></span><div style="display:flex;gap:8px"><button class="btn" id="vPrev" aria-label="이전">‹</button><button class="btn" id="vNext" aria-label="다음">›</button><button class="btn" id="vClose" aria-label="닫기">닫기</button></div></div>
+  <div class="bar"><span id="vTitle"></span><div style="display:flex;gap:8px"><button class="btn" id="vPrev" aria-label="이전">‹</button><button class="btn" id="vNext" aria-label="다음">›</button><button class="btn" id="vPng">PNG 저장</button><button class="btn" id="vClose" aria-label="닫기">닫기</button></div></div>
   <img id="vImg" alt="">
 </div>
 
@@ -810,6 +810,24 @@ document.getElementById('vClose').onclick=()=>viewer.classList.remove('on');
 document.getElementById('vPrev').onclick=()=>openViewer(vi-1);document.getElementById('vNext').onclick=()=>openViewer(vi+1);
 viewer.addEventListener('click',e=>{if(e.target===viewer)viewer.classList.remove('on');});
 document.addEventListener('keydown',e=>{if(!viewer.classList.contains('on'))return;if(e.key==='Escape')viewer.classList.remove('on');if(e.key==='ArrowRight')openViewer(vi+1);if(e.key==='ArrowLeft')openViewer(vi-1);});
+// 삽도 PNG 저장 (한 장 / 전체 ZIP)
+const sdSrc=i=>`img/sapdo_${String(i+1).padStart(2,'0')}.jpg`;
+const sdName=i=>`삽도${String(i+1).padStart(2,'0')}_${TITLES[i].replace(/^삽도\s*\d+\.\s*/,'').replace(/[\\/:*?"<>|]/g,'_').trim()}.png`;
+const sdPng=i=>new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0);c.toBlob(b=>b?ok(b):no(new Error('png')),'image/png');};im.onerror=()=>no(new Error('img'));im.src=sdSrc(i);});
+const sdSave=(blob,name)=>{const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),3000);};
+const sdZip=(()=>{const T=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;T[n]=c>>>0;}
+ const crc=u=>{let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=T[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;};const enc=new TextEncoder();
+ return files=>{const parts=[],cen=[];let off=0;const d0=new Date(),dt=((d0.getHours()<<11)|(d0.getMinutes()<<5)|(d0.getSeconds()>>1)),dd=(((d0.getFullYear()-1980)<<9)|((d0.getMonth()+1)<<5)|d0.getDate());
+  for(const f of files){const nm=enc.encode(f.name),d=f.data,c=crc(d);
+   const l=new DataView(new ArrayBuffer(30));l.setUint32(0,0x04034b50,true);l.setUint16(4,20,true);l.setUint16(6,0x0800,true);l.setUint16(10,dt,true);l.setUint16(12,dd,true);l.setUint32(14,c,true);l.setUint32(18,d.length,true);l.setUint32(22,d.length,true);l.setUint16(26,nm.length,true);
+   parts.push(l,nm,d);
+   const h=new DataView(new ArrayBuffer(46));h.setUint32(0,0x02014b50,true);h.setUint16(4,20,true);h.setUint16(6,20,true);h.setUint16(8,0x0800,true);h.setUint16(12,dt,true);h.setUint16(14,dd,true);h.setUint32(16,c,true);h.setUint32(20,d.length,true);h.setUint32(24,d.length,true);h.setUint16(28,nm.length,true);h.setUint32(42,off,true);
+   cen.push(h,nm);off+=30+nm.length+d.length;}
+  const cs=cen.reduce((s,x)=>s+x.byteLength,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cs,true);e.setUint32(16,off,true);
+  return new Blob([...parts,...cen,e],{type:'application/zip'});};})();
+{const b=document.getElementById('vPng');b.onclick=async()=>{const t=b.textContent;b.disabled=true;b.textContent='만드는 중…';try{sdSave(await sdPng(vi),sdName(vi));b.textContent='저장했습니다';}catch(e){b.textContent='저장 실패';}setTimeout(()=>{b.textContent=t;b.disabled=false;},1500);};}
+{const b=document.getElementById('gPngAll');b.onclick=async()=>{const t=b.textContent;b.disabled=true;try{const fs=[];for(let i=0;i<TITLES.length;i++){b.textContent=`PNG 만드는 중 ${i+1}/${TITLES.length}`;fs.push({name:sdName(i),data:new Uint8Array(await (await sdPng(i)).arrayBuffer())});}
+ sdSave(sdZip(fs),`서리_삽도${TITLES.length}장_PNG.zip`);b.textContent='저장했습니다';}catch(e){b.textContent='저장 실패';}setTimeout(()=>{b.textContent=t;b.disabled=false;},2000);};}
 // analysis bars
 const A=W.filter(w=>w.an==='Y'),tot=A.reduce((s,w)=>s+w.plan,0);
 const grp=(key)=>{const m=new Map();for(const w of A){const k=key(w);const o=m.get(k)||{n:0,v:0};o.n++;o.v+=w.plan;m.set(k,o);}return [...m.entries()];};
