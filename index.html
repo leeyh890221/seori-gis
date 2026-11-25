@@ -203,6 +203,11 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 #map-sec .side .pwrap.min .panel{display:block}
 #map-sec .side .panel{flex:1 1 auto;min-height:0}
 .pintro{font-size:14px!important;line-height:1.6}
+#map-sec .mapbox{container-type:inline-size}
+#map-sec .mapbox .legend{max-width:calc(100% - 180px);max-height:calc(100% - 64px);overflow:auto;box-sizing:border-box;grid-template-columns:repeat(3,minmax(0,max-content))}
+#map-sec .mapbox .legend span{white-space:normal;min-width:0}
+@container (max-width:700px){#map-sec .mapbox .legend{grid-template-columns:repeat(2,minmax(0,max-content));font-size:12px;column-gap:12px}}
+@container (max-width:480px){#map-sec .mapbox .legend{grid-template-columns:minmax(0,max-content);max-width:calc(100% - 160px)}}
 #map-sec .mapbox .credit{left:10px;top:10px;right:auto;bottom:auto;max-width:calc(100% - 90px);white-space:normal;line-height:1.45;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 @media(max-width:760px){
  #map-sec .mapgrid{grid-template-columns:minmax(0,1fr)}
