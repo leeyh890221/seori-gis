@@ -189,6 +189,26 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
 #bpStB tbody tr{cursor:pointer}#bpStB tbody tr:hover{background:var(--soft)}#bpStB tr.z td,#bpStB tr.z th{color:#9aa4ae}
 #bptbl tbody tr{cursor:pointer}#bptbl .tag{padding:2px 8px;border-radius:4px}
 @media print{.bpbar{display:none!important}}
+
+/* 선택 정보: 지도 오른쪽 */
+#map-sec .mapgrid{display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,31%,370px);column-gap:14px;align-items:stretch}
+#map-sec .mapgrid>div:first-child{display:contents}
+#map-sec .mapgrid .mapbox{grid-column:1;grid-row:1}
+#map-sec .mapgrid .side{grid-column:2;grid-row:1;position:relative;min-height:0}
+#map-sec .mapgrid .lyr{grid-column:1/-1;grid-row:2}
+#map-sec .mapgrid #satNote{grid-column:1/-1;grid-row:3}
+#map-sec .side .pwrap{position:absolute;inset:0;width:auto;max-height:none;z-index:1;background:var(--bg);box-shadow:0 2px 10px rgba(0,0,0,.08);border-radius:6px}
+#map-sec .side .pbar{padding:10px 14px;font-weight:700;color:var(--ink);background:var(--soft);border-radius:6px 6px 0 0}
+#map-sec .side .pbar button{display:none}
+#map-sec .side .pwrap.min .panel{display:block}
+#map-sec .side .panel{flex:1 1 auto;min-height:0}
+.pintro{font-size:14px!important;line-height:1.6}
+@media(max-width:760px){
+ #map-sec .mapgrid{grid-template-columns:minmax(0,1fr)}
+ #map-sec .mapgrid .side{grid-column:1;grid-row:2;height:min(62vh,560px);margin-top:10px}
+ #map-sec .mapgrid .lyr{grid-row:3}
+ #map-sec .mapgrid #satNote{grid-row:4}
+}
 </style>
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
@@ -225,7 +245,6 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
     <div>
       <div class="mapbox" id="mapbox">
         <svg id="map" role="img" aria-label="서리 과업 대상지역의 리 경계, 논·밭·구거 필지와 개발이용관정 85공 위치"><defs><pattern id="erH" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(-45)"><rect width="9" height="9" fill="#a0401a" fill-opacity=".18"/><rect width="2.6" height="9" fill="#a0401a"/></pattern><pattern id="erM" patternUnits="userSpaceOnUse" width="12" height="12" patternTransform="rotate(-45)"><rect width="12" height="12" fill="#d08a2c" fill-opacity=".14"/><rect width="2" height="12" fill="#c46f12"/></pattern><pattern id="xh" patternUnits="userSpaceOnUse" width="5" height="5"><rect width="5" height="5" fill="#fff"/><path d="M0,0L5,5M5,0L0,5" stroke="#3f4752" stroke-width=".7"/></pattern><pattern id="hatch" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><rect width="7" height="7" fill="#dfe2e6"/><rect width="2.2" height="7" fill="#8d96a1"/></pattern></defs><g id="gSat"></g><g id="gS"></g><g id="gD"></g></svg>
-        <div class="pwrap" id="pwrap"><div class="pbar"><span>선택 정보</span><button type="button" id="pToggle" aria-expanded="true">접기</button></div><aside class="panel" id="panel" aria-live="polite"></aside></div>
         <div class="tools">
           <button id="zin" aria-label="확대">+</button>
           <div class="zbar"><input type="range" id="zsl" min="0" max="100" step="1" value="0" aria-label="지도 확대 수준" orient="vertical"><output id="zlv">1단계</output></div>
@@ -295,6 +314,7 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
       </div>
       <p class="notes" id="satNote" hidden style="margin:8px 0 0">위성영상: 브이월드 영상지도(GIMS 화면 캡처, 2026-11-24). 확대하면 필지·관정 주변은 약 1.4m, 마을·논밭·도수관로 중심부는 약 0.6m 상세 영상으로 바뀝니다.</p>
     </div>
+    <div class="side"><div class="pwrap" id="pwrap"><div class="pbar"><span>선택 정보</span><button type="button" id="pToggle" aria-expanded="true">접기</button></div><aside class="panel" id="panel" aria-live="polite"></aside></div></div>
   </div>
 </div></section>
 
@@ -627,7 +647,7 @@ const setPanel=open=>{if(open)pwrap.hidden=false;pwrap.classList.toggle('min',!o
 pTog.addEventListener('click',()=>setPanel(pwrap.classList.contains('min')));
 pwrap.addEventListener('pointerdown',e=>e.stopPropagation());pwrap.addEventListener('wheel',e=>e.stopPropagation());
 if(window.matchMedia('(max-width:600px)').matches)setPanel(false);
-function showIntro(){panel.innerHTML='';setPanel(false);pwrap.hidden=true;}
+function showIntro(){panel.innerHTML='<p class="pintro">지도에서 필지·관정·시설물을 누르면 이곳에 조사 결과가 나옵니다.</p><p class="pintro">필지를 누르면 <b>사업 참여 · BMPs</b>를 입력하고 지도에 BMP를 그릴 수 있습니다.</p>';setPanel(true);}
 
 const PF={f:'chg'};
 const prow=(k,p,i)=>{const key=k+':'+p[0],cad=PK[k].jm,srv=srvOf(k,p[0]),chg=k!=='gugeo'&&isChg(k,p[0]);const ch=srv==='소실'?'소실':chg?'지목 변경':srv==='미조사'?'미조사':'';const recs=(SV.rec[key]||[]).map(j=>SV.recs[j]);const ws=Object.entries(WP).filter(([n,v])=>v.startsWith(`${({dap:'답',jeon:'전',gugeo:'구거'})[k]} (${p[0]}) `)).map(([n])=>n);return {k,i,p,key,cad,srv,ch,recs,ws,ov:k!=='gugeo'?OV[key]:null};};
