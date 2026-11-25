@@ -37,6 +37,13 @@ h2{font-size:24px;line-height:1.25;margin:0 0 6px}
 .mapgrid{display:block}
 .mapbox{position:relative;height:min(72vh,700px);min-height:420px;border:1px solid var(--line);background:var(--land);border-radius:6px;overflow:hidden;touch-action:none}
 #map{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+.mapbox{height:min(calc(100vh - 120px),820px);min-height:480px}
+.tools .tb2{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:4px 0;min-height:48px;font-size:11px;line-height:1.1}.tools .tb2:disabled{opacity:.4;cursor:default}.tools .tb2:not(:disabled):hover,.tools>button:hover{background:var(--soft)}
+.mapbox .tools .narrow{position:static;width:44px;height:58px;box-shadow:none}
+.fz{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;flex:none}.fz:hover{background:var(--soft);color:var(--deep)}.fz:focus-visible{outline:3px solid #ffb703;outline-offset:2px}.li>.fz{margin-left:auto}
+.ztip{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:5;background:rgba(15,30,45,.88);color:#fff;font-size:13px;padding:6px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s}.ztip.on{opacity:1}
+@media(max-height:700px){.tools .zbar{display:none}}
+
 #map.drag{cursor:grabbing}
 .tools{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px;z-index:3}
 .zbar{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 0 6px;width:44px}.zbar input{writing-mode:vertical-lr;direction:rtl;width:22px;height:120px;margin:0;accent-color:var(--deep);cursor:pointer}.zbar output{font-size:11px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -190,9 +197,10 @@ footer{color:var(--sub);font-size:13.5px;border-top:1px solid var(--line)}
           <button id="zin" aria-label="확대">+</button>
           <div class="zbar"><input type="range" id="zsl" min="0" max="100" step="1" value="0" aria-label="지도 확대 수준" orient="vertical"><output id="zlv">1단계</output></div>
           <button id="zout" aria-label="축소">−</button>
-          <button id="zreset" aria-label="전체 보기">전체</button>
+          <button id="zhome" class="tb2" aria-label="기본 화면으로" title="기본 화면으로 (과업 대상지역 전체)"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 9.8V20h5v-5.5h3V20h5V9.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg><span>기본</span></button>
+          <button id="zfocus" class="tb2" aria-label="선택 항목 포커스" title="선택한 필지·관정·시설물로 확대" disabled><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>포커스</span></button>
+          <div class="narrow" role="img" aria-label="방위표: 지도 위쪽이 북쪽"><svg width="30" height="48" viewBox="0 0 30 48" aria-hidden="true"><text x="15" y="12" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">N</text><polygon points="15,15 23,44 15,38" style="fill:var(--ink)"/><polygon points="15,15 7,44 15,38" style="fill:var(--bg);stroke:var(--ink)" stroke-width="1.3"/></svg></div>
         </div>
-        <div class="narrow" role="img" aria-label="방위표: 지도 위쪽이 북쪽"><svg width="30" height="48" viewBox="0 0 30 48" aria-hidden="true"><text x="15" y="12" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">N</text><polygon points="15,15 23,44 15,38" style="fill:var(--ink)"/><polygon points="15,15 7,44 15,38" style="fill:var(--bg);stroke:var(--ink)" stroke-width="1.3"/></svg></div>
         <div class="sbar" id="sbar" aria-live="off"></div>
         <div class="legend" id="legend" aria-label="범례"></div>
         <button type="button" class="lgbtn" id="lgBtn" aria-expanded="false" aria-controls="legend">범례 보기</button>
@@ -369,6 +377,40 @@ let vb=null,sel=null,CUR=null;
 function clearSel(){CUR=null;sel=null;selP=null;showIntro();buildStatic();draw();for(const r of document.querySelectorAll('tbody tr.sel'))r.classList.remove('sel');}
 function same(k){if(CUR===k){clearSel();return true;}return false;}
 const fit=e=>{const pad=0.06,w=e[2]-e[0],h=e[3]-e[1],cw=box.clientWidth,ch=box.clientHeight;let W2=w*(1+pad*2),H2=h*(1+pad*2);if(W2/H2<cw/ch)W2=H2*cw/ch;else H2=W2*ch/cw;const cx=(e[0]+e[2])/2,cy=(e[1]+e[3])/2;vb={x:cx-W2/2,y:cy-H2/2,w:W2,h:H2};};
+
+let VT=false;
+const OVS=['.tools','.narrow','.sbar','.legend','.lgbtn','.bmap','.credit','.pwrap'];
+function safeFit(e,padR,minW){padR=padR==null?0.03:padR;const W=box.clientWidth,H=box.clientHeight;if(!W||!H){fit(e);return;}
+  let x0=e[0],y0=e[1],x1=e[2],y1=e[3];if(minW){const cx=(x0+x1)/2,cy=(y0+y1)/2,w=Math.max(x1-x0,minW),h=Math.max(y1-y0,minW*0.6);x0=cx-w/2;x1=cx+w/2;y0=cy-h/2;y1=cy+h/2;}
+  const ew=(x1-x0)*(1+2*padR)||1,eh=(y1-y0)*(1+2*padR)||1,br=box.getBoundingClientRect(),G=8,obs=[];
+  for(const s of OVS)for(const el of box.querySelectorAll(':scope>'+s)){if(el.hidden)continue;const cs=getComputedStyle(el);if(cs.display==='none'||cs.visibility==='hidden')continue;const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;obs.push([r.left-br.left-G,r.top-br.top-G,r.right-br.left+G,r.bottom-br.top+G]);}
+  const P=6,xs=[P,W-P],ys=[P,H-P];for(const o of obs){xs.push(o[0],o[2]);ys.push(o[1],o[3]);}
+  const X=[...new Set(xs.filter(v=>v>=P&&v<=W-P))].sort((a,b)=>a-b),Y=[...new Set(ys.filter(v=>v>=P&&v<=H-P))].sort((a,b)=>a-b);let best=null;
+  for(let a=0;a<X.length;a++)for(let b=a+1;b<X.length;b++){const l=X[a],r=X[b];if(r-l<80)continue;const ob=obs.filter(o=>o[0]<r&&o[2]>l);
+    for(let c=0;c<Y.length;c++)for(let d=c+1;d<Y.length;d++){const t=Y[c],bt=Y[d];if(bt-t<80)continue;if(ob.some(o=>o[1]<bt&&o[3]>t))continue;const s=Math.min((r-l)/ew,(bt-t)/eh),ar=(r-l)*(bt-t);if(!best||s>best.s*1.001||(s>best.s*0.999&&ar>best.ar))best={s,ar,l,r,t,b:bt};}}
+  if(!best){fit(e);return;}
+  const s=best.s,vw=W/s,vh=H/s,cx=(x0+x1)/2,cy=(y0+y1)/2,rx=(best.l+best.r)/2,ry=(best.t+best.b)/2;vb={x:cx-rx/s,y:cy-(1-ry/H)*vh,w:vw,h:vh};}
+const goHome=()=>{VT=false;safeFit(EXT);draw();};
+const bbXY=(pts,A)=>{for(const p of pts){if(p[0]<A[0])A[0]=p[0];if(p[1]<A[1])A[1]=p[1];if(p[0]>A[2])A[2]=p[0];if(p[1]>A[3])A[3]=p[1];}return A;};
+const bbFlat=(a,A)=>{for(let j=0;j<a.length;j+=2){if(a[j]<A[0])A[0]=a[j];if(a[j+1]<A[1])A[1]=a[j+1];if(a[j]>A[2])A[2]=a[j];if(a[j+1]>A[3])A[3]=a[j+1];}return A;};
+const EMPTY=()=>[1e12,1e12,-1e12,-1e12],okExt=A=>A[0]<=A[2]?A:null;
+function selExt(){if(!CUR)return null;const t=CUR[0],n=Number(CUR.slice(1)),A=EMPTY();
+  if(t==='p'&&selP&&PC){for(const poly of PC[selP.k][selP.i][6])for(const r of poly)bbFlat(r,A);return okExt(A);}
+  if(t==='w'){const w=W.find(v=>v.no===n);return w?[w.x,w.y,w.x,w.y]:null;}
+  if(t==='e'){EROS[n].r.forEach(r=>bbXY(r,A));return okExt(A);}
+  const m=t==='q'?WQ[n]:t==='b'?SABANG[n]:t==='m'?SUMUN[n]:null;if(m)return [m.x,m.y,m.x,m.y];
+  if(t==='d'){const p=n===1?DOSU[DOSU.length-1]:DOSU[0];return [p[0],p[1],p[0],p[1]];}
+  return null;}
+function layerExt(id){const A=EMPTY();const pc=f=>{if(!PC)return;for(const k of ['jeon','dap','gugeo'])PC[k].forEach(p=>{if(f(k,p[0]))for(const poly of p[6])for(const r of poly)bbFlat(r,A);});};
+  const C={tDap:'dap',tJeon:'jeon',tGwa:'gwa',tChuk:'chuk',tGugeo:'gugeo',tNos:'nos',tGone:'gone'},xy=a=>a.map(m=>[m.x,m.y]);
+  if(C[id])pc((k,no)=>clsOf(k,no)===C[id]);else if(id==='tChg')pc((k,no)=>isChg(k,no));
+  else if(id==='tEros')EROS.forEach(e=>e.r.forEach(r=>bbXY(r,A)));else if(id==='tFlow')FLOW.forEach(f=>bbXY(f.pts,A));else if(id==='tDrain')DRAIN.forEach(d=>bbXY(d[1],A));
+  else if(id==='tWAg')bbXY(xy(W.filter(isAg)),A);else if(id==='tWGen')bbXY(xy(W.filter(w=>!isAg(w))),A);else if(id==='tAnalysis')bbXY(xy(W),A);else if(id==='tEx')bbXY(xy(EX),A);
+  else if(id==='tDosu')bbXY(DOSU,A);else if(id==='tDosuPt')bbXY([DOSU[0],DOSU[DOSU.length-1]],A);else if(id==='tSabang')bbXY(xy(SABANG),A);else if(id==='tSumun')bbXY(xy(SUMUN),A);else if(id==='tWq')bbXY(xy(WQ),A);
+  return okExt(A);}
+let ztipT=0;const ztip=msg=>{let t=box.querySelector('.ztip');if(!t){t=document.createElement('div');t.className='ztip';t.setAttribute('role','status');box.appendChild(t);}t.textContent=msg;t.classList.add('on');clearTimeout(ztipT);ztipT=setTimeout(()=>t.classList.remove('on'),1600);};
+function focusSel(){const e=selExt();if(!e){ztip('지도나 목록에서 먼저 항목을 선택하세요');return;}VT=true;const pt=e[0]===e[2]&&e[1]===e[3];safeFit(e,pt?0:0.35,pt?260:160);buildStatic();draw();}
+function focusLayer(id){const cb=document.getElementById(id);if(cb&&!cb.checked){cb.checked=true;cb.dispatchEvent(new Event('change',{bubbles:true}));}const e=layerExt(id);if(!e){ztip('표시할 자료가 없습니다');return;}VT=true;const pt=e[0]===e[2]&&e[1]===e[3];safeFit(e,0.05,pt?260:200);draw();box.scrollIntoView({behavior:'smooth',block:'nearest'});}
 const sx=x=>x, sy=y=>-y;
 const SH=new Set();
 const T={frames:true,an:false,ex:false,dap:true,jeon:true,gugeo:true,chg:true,nos:true,gone:true,eros:true,dosu:true,dosuPt:true,sumun:true,sabang:true,flow:true,drain:true,wq:true,gwa:true,chuk:true,wAg:true,wGen:true,sat:false};
@@ -405,7 +447,8 @@ function buildStatic(){
   gS.innerHTML=h;
 }
 function draw(){
-  if(!vb) fit(EXT);
+  if(!vb) safeFit(EXT);
+  {const fb=document.getElementById('zfocus');if(fb)fb.disabled=!CUR;}
   {const cl=(c,h,a,b)=>h>=b-a?(a+b)/2:Math.min(Math.max(c,a+h/2),b-h/2);const cx=cl(vb.x+vb.w/2,vb.w,WIDE[1],WIDE[1]+WIDE[3]),cy=cl(vb.y+vb.h/2,vb.h,WIDE[2],WIDE[2]+WIDE[4]);vb.x=cx-vb.w/2;vb.y=cy-vb.h/2;}
   const ppm=box.clientWidth/vb.w, r=Math.max(3,Math.min(7,3+ppm*2))/ppm, lw=1/ppm;
   svg.setAttribute('viewBox',`${vb.x} ${-(vb.y+vb.h)} ${vb.w} ${vb.h}`);
@@ -462,7 +505,7 @@ function ptable(){if(!PC)return;if(!PROWS){PROWS=[];for(const k of ['dap','jeon'
   document.getElementById('pcnt').textContent=`${rows.length.toLocaleString()}필지`;window.__prows=rows;}
 for(const b of document.querySelectorAll('#pf button'))b.onclick=()=>{PF.f=b.dataset.f;for(const x of document.querySelectorAll('#pf button'))x.setAttribute('aria-pressed',String(x===b));ptable();};
 document.getElementById('pq').addEventListener('input',ptable);
-const ppick=tr=>{if(!tr||!tr.dataset.k)return;if(same('p'+tr.dataset.k+tr.dataset.i))return;const k=tr.dataset.k,i=Number(tr.dataset.i),p=PC[k][i];let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const poly of p[6])for(const r of poly)for(let j=0;j<r.length;j+=2){x0=Math.min(x0,r[j]);x1=Math.max(x1,r[j]);y0=Math.min(y0,r[j+1]);y1=Math.max(y1,r[j+1]);}const ar=box.clientHeight/box.clientWidth,w=Math.max(160,Math.min(600,Math.max(x1-x0,(y1-y0)/ar)*3)),h=w*ar;vb={x:(x0+x1)/2-w/2,y:(y0+y1)/2-h/2,w,h};showParcel(k,i);draw();document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
+const ppick=tr=>{if(!tr||!tr.dataset.k)return;if(same('p'+tr.dataset.k+tr.dataset.i))return;const k=tr.dataset.k,i=Number(tr.dataset.i),p=PC[k][i];let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const poly of p[6])for(const r of poly)for(let j=0;j<r.length;j+=2){x0=Math.min(x0,r[j]);x1=Math.max(x1,r[j]);y0=Math.min(y0,r[j+1]);y1=Math.max(y1,r[j+1]);}showParcel(k,i);VT=true;safeFit([x0,y0,x1,y1],0.6,160);draw();document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
 document.querySelector('#ptbl tbody').addEventListener('click',e=>ppick(e.target.closest('tr')));
 document.querySelector('#ptbl tbody').addEventListener('keydown',e=>{if(e.key==='Enter')ppick(e.target.closest('tr'));});
 document.getElementById('pcsv').onclick=()=>{const rows=window.__prows||[];const H=['PNU','소재지','지번','본번','부번','지적도기준','지적도_필지번호','면적_m2(도형)','조사결과','변화구분','기초조사_기록','조사일','조사자','필지내_관정번호','경영체_등록번호','경영체_신고품목','경영체_신고면적_m2','경영체_비교결과','비고'];
@@ -494,7 +537,7 @@ function ertable(){const ord=EROS.map((e,i)=>i).sort((a,b)=>(EROS[a].g==='높음
   const n1=EROS.filter(e=>e.g==='높음'),n2=EROS.filter(e=>e.g!=='높음'),sa=a=>a.reduce((s,e)=>s+e.a,0);
   document.getElementById('erSum').textContent=`총 ${EROS.length}개소 · 약 ${(sa(EROS)/1e4).toFixed(1)}ha (1순위 ${n1.length}개소 ${(sa(n1)/1e4).toFixed(1)}ha, 2순위 ${n2.length}개소 ${(sa(n2)/1e4).toFixed(1)}ha)`;}
 const erpick=tr=>{if(!tr||tr.dataset.i===undefined)return;if(same('e'+tr.dataset.i))return;const i=Number(tr.dataset.i),e=EROS[i];let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const r of e.r)for(const [x,y] of r){x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);}
-  const W=Math.max(300,(x1-x0)*2.2),H=W*box.clientHeight/box.clientWidth;vb={x:(x0+x1)/2-W/2,y:(y0+y1)/2-H/2,w:W,h:H};if(!T.eros){T.eros=true;document.getElementById('tEros').checked=true;buildStatic();legend();}showEros(i);document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
+  if(!T.eros){T.eros=true;document.getElementById('tEros').checked=true;buildStatic();legend();}showEros(i);VT=true;safeFit([x0,y0,x1,y1],0.6,300);draw();document.getElementById('map-sec').scrollIntoView({behavior:'smooth'});};
 document.querySelector('#ertbl tbody').addEventListener('click',e=>erpick(e.target.closest('tr')));
 document.querySelector('#ertbl tbody').addEventListener('keydown',e=>{if(e.key==='Enter')erpick(e.target.closest('tr'));});
 ertable();
@@ -518,7 +561,7 @@ function showWell(n,center){CUR='w'+n;sel=n;setPanel(true);if(selP){selP=null;bu
   for(const tr of document.querySelectorAll('#tbl tbody tr'))tr.classList.toggle('sel',Number(tr.dataset.n)===n);
   draw();}
 // pan & zoom
-const zoomAt=(f,px,py)=>{const mx=vb.x+px/box.clientWidth*vb.w,my=vb.y+(1-py/box.clientHeight)*vb.h;const nw=Math.max(150,Math.min(vb.w*f,WIDE[3]*0.98,WIDE[4]*0.98*box.clientWidth/box.clientHeight));const k=nw/vb.w;vb={x:mx-(mx-vb.x)*k,y:my-(my-vb.y)*k,w:nw,h:vb.h*k};draw();};
+const zoomAt=(f,px,py)=>{VT=true;const mx=vb.x+px/box.clientWidth*vb.w,my=vb.y+(1-py/box.clientHeight)*vb.h;const nw=Math.max(150,Math.min(vb.w*f,WIDE[3]*0.98,WIDE[4]*0.98*box.clientWidth/box.clientHeight));const k=nw/vb.w;vb={x:mx-(mx-vb.x)*k,y:my-(my-vb.y)*k,w:nw,h:vb.h*k};draw();};
 svg.addEventListener('wheel',e=>{e.preventDefault();const r=svg.getBoundingClientRect();zoomAt(e.deltaY>0?1.25:0.8,e.clientX-r.left,e.clientY-r.top);},{passive:false});
 let drag=null,moved=false;
 const PT=new Map();let pinch=null;
@@ -527,12 +570,15 @@ svg.addEventListener('pointerdown',e=>{PT.set(e.pointerId,{x:e.clientX,y:e.clien
 svg.addEventListener('pointermove',e=>{if(PT.has(e.pointerId))PT.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(pinch&&PT.size>=2){const [a,b]=[...PT.values()];const r=svg.getBoundingClientRect(),W=box.clientWidth,H=box.clientHeight,v0=pinch.vb0;const d=Math.hypot(a.x-b.x,a.y-b.y)||1;let sc=pinch.d0/d;const maxW=Math.min(WIDE[3]*0.98,WIDE[4]*0.98*W/H);sc=Math.max(150/v0.w,Math.min(sc,maxW/v0.w));
     const wx=v0.x+pinch.m0[0]/W*v0.w,wy=v0.y+(1-pinch.m0[1]/H)*v0.h,mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top,w=v0.w*sc,h=v0.h*sc;vb={x:wx-mx/W*w,y:wy-(1-my/H)*h,w,h};draw();return;}
-  if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4)moved=true;const k=vb.w/box.clientWidth;vb.x=drag.vx-dx*k;vb.y=drag.vy+dy*k;draw();});
+  if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4){moved=true;VT=true;}const k=vb.w/box.clientWidth;vb.x=drag.vx-dx*k;vb.y=drag.vy+dy*k;draw();});
 svg.addEventListener('pointercancel',e=>{PT.delete(e.pointerId);if(PT.size<2)pinch=null;drag=null;svg.classList.remove('drag');});
 svg.addEventListener('pointerup',e=>{PT.delete(e.pointerId);if(pinch||PT.size){if(PT.size<2)pinch=null;drag=null;moved=true;if(!PT.size)svg.classList.remove('drag');return;}svg.classList.remove('drag');const d=drag;drag=null;if(moved||!d)return;const el=document.elementFromPoint(e.clientX,e.clientY);const c=el&&el.closest('.w');if(c){if(!same('w'+c.dataset.n))showWell(Number(c.dataset.n),false);return;}const er=el&&el.closest('.er');if(er){if(!same('e'+er.dataset.i))showEros(Number(er.dataset.i));return;}const wq=el&&el.closest('.wq');if(wq){if(!same('q'+wq.dataset.i))showWq(Number(wq.dataset.i));return;}const sb=el&&el.closest('.sb');if(sb){if(!same('b'+sb.dataset.i))showSabang(Number(sb.dataset.i));return;}const sm=el&&el.closest('.sm');if(sm){if(!same('m'+sm.dataset.i))showSumun(Number(sm.dataset.i));return;}const dp=el&&el.closest('.dp');if(dp){if(!same('d'+dp.dataset.k))showDosu(Number(dp.dataset.k));return;}const ds=el&&el.closest('.ds');if(ds){if(!same('d-1'))showDosu(-1);return;}const g=el&&el.closest('.fr');if(g){openViewer(Number(g.dataset.f)+NFIX-1);return;}const pc=el&&el.closest('.pc');if(pc){if(!same('p'+pc.dataset.k+pc.dataset.i))showParcel(pc.dataset.k,Number(pc.dataset.i));return;}if(CUR||sel||selP)clearSel();});
 document.getElementById('zin').onclick=()=>zoomAt(0.7,box.clientWidth/2,box.clientHeight/2);
 document.getElementById('zout').onclick=()=>zoomAt(1.43,box.clientWidth/2,box.clientHeight/2);
-document.getElementById('zreset').onclick=()=>{fit(EXT);draw();};
+
+document.getElementById('zhome').onclick=goHome;document.getElementById('zfocus').onclick=focusSel;
+for(const li of document.querySelectorAll('.lyr .li')){const cb=li.querySelector('input[type=checkbox][id]'),lb=li.querySelector('label');if(!cb||!lb)continue;const c=lb.cloneNode(true);c.querySelectorAll('small').forEach(s=>s.remove());const nm=c.textContent.trim().replace(/\s+/g,' ');const b=document.createElement('button');b.type='button';b.className='fz';b.title=nm+' 레이어로 확대';b.setAttribute('aria-label',nm+' 레이어로 확대');b.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';b.onclick=()=>focusLayer(cb.id);const op=li.querySelector('.op');if(op)op.appendChild(b);else li.appendChild(b);}
+
 const zMax=()=>Math.min(WIDE[3]*0.98,WIDE[4]*0.98*box.clientWidth/box.clientHeight),zMin=150,ZL=20;
 const zFromW=w=>Math.round(100*Math.log(zMax()/w)/Math.log(zMax()/zMin));
 const zsl=document.getElementById('zsl'),zlv=document.getElementById('zlv');
@@ -542,7 +588,7 @@ zsl.addEventListener('input',()=>{const w=zMax()*Math.pow(zMin/zMax(),zsl.value/
 const tg=(id,k)=>document.getElementById(id).addEventListener('change',e=>{T[k]=e.target.checked;legend();draw();});
 tg('tAnalysis','an');tg('tEx','ex');tg('tWAg','wAg');tg('tWGen','wGen');tg('tDosu','dosu');tg('tFlow','flow');tg('tDrain','drain');tg('tWq','wq');document.getElementById('tEros').addEventListener('change',e=>{T.eros=e.target.checked;legend();buildStatic();draw();});tg('tDosuPt','dosuPt');tg('tSumun','sumun');tg('tSabang','sabang');
 for(const [id,k] of [['tDap','dap'],['tJeon','jeon'],['tGugeo','gugeo'],['tChg','chg'],['tNos','nos'],['tGone','gone'],['tGwa','gwa'],['tChuk','chuk']])document.getElementById(id).addEventListener('change',e=>{T[k]=e.target.checked;legend();buildStatic();draw();});
-const ro=new ResizeObserver(()=>{if(vb){const c=[vb.x+vb.w/2,vb.y+vb.h/2];const nh=vb.w*box.clientHeight/box.clientWidth;vb={x:vb.x,y:c[1]-nh/2,w:vb.w,h:nh};}draw();});ro.observe(box);
+const ro=new ResizeObserver(()=>{if(!VT){vb=null;}else if(vb){const c=[vb.x+vb.w/2,vb.y+vb.h/2];const nh=vb.w*box.clientHeight/box.clientWidth;vb={x:vb.x,y:c[1]-nh/2,w:vb.w,h:nh};}draw();});ro.observe(box);
 // gallery & viewer
 const gal=document.getElementById('gal');
 gal.innerHTML=TITLES.map((t,i)=>`<figure data-i="${i}" tabindex="0"><img loading="lazy" src="img/sapdo_${String(i+1).padStart(2,'0')}.jpg" alt="${esc(t)}"><figcaption>${esc(t)}${i>=NFIX?` · 관정 ${esc(FR[i-NFIX].wells)}`:''}</figcaption></figure>`).join('');
@@ -577,7 +623,7 @@ const setBase=sat=>{T.sat=sat;document.getElementById('bBase').setAttribute('ari
 document.getElementById('bBase').onclick=()=>setBase(false);document.getElementById('bSat').onclick=()=>setBase(true);
 for(const [id,v,k] of [['oDap','vDap','dap'],['oJeon','vJeon','jeon'],['oGugeo','vGugeo','gugeo'],['oChg','vChg','chg'],['oNos','vNos','nos'],['oGone','vGone','gone'],['oGwa','vGwa','gwa'],['oChuk','vChuk','chuk']]){const inp=document.getElementById(id),out=document.getElementById(v);const ap=()=>{svg.style.setProperty('--op-'+k,String(1-inp.value/100));out.textContent=inp.value+'%';};inp.addEventListener('input',ap);ap();}
 const shBoxes=[...document.querySelectorAll('.sheets input[data-sh]')];
-const fitSheets=()=>{if(!SH.size)return;const fs=FR.filter(f=>SH.has(f.no));fit([Math.min(...fs.map(f=>f.x0)),Math.min(...fs.map(f=>f.y0)),Math.max(...fs.map(f=>f.x1)),Math.max(...fs.map(f=>f.y1))]);};
+const fitSheets=()=>{if(!SH.size)return;const fs=FR.filter(f=>SH.has(f.no));VT=true;safeFit([Math.min(...fs.map(f=>f.x0)),Math.min(...fs.map(f=>f.y0)),Math.max(...fs.map(f=>f.x1)),Math.max(...fs.map(f=>f.y1))]);};
 const syncSheets=(zoom)=>{SH.clear();for(const b of shBoxes)if(b.checked)SH.add(Number(b.dataset.sh));if(zoom)fitSheets();legend();draw();};
 for(const b of shBoxes)b.addEventListener('change',()=>syncSheets(b.checked));
 const gUpd=()=>{for(const g of document.querySelectorAll('.gchk')){const m=g.dataset.g==='sh'?shBoxes:[...document.querySelectorAll(`input[data-g="${g.dataset.g}"]:not(.gchk)`)];const n=m.filter(b=>b.checked).length;g.checked=n===m.length;g.indeterminate=n>0&&n<m.length;}};
@@ -585,7 +631,8 @@ for(const g of document.querySelectorAll('.gchk'))g.addEventListener('change',()
 for(const b of document.querySelectorAll('.gtog'))b.addEventListener('click',e=>{e.preventDefault();const g=b.closest('.grp'),open=g.classList.toggle('closed')===false;b.setAttribute('aria-expanded',String(open));b.textContent=open?'접기 ▴':'펼치기 ▾';b.setAttribute('aria-label',b.getAttribute('aria-label').replace(/(펼치기|접기)$/,open?'접기':'펼치기'));});
 for(const el of [document.querySelector('.lyr')])el.addEventListener('change',e=>{if(!e.target.classList.contains('gchk'))gUpd();});{const mb=document.getElementById('mapbox'),lb=document.getElementById('lgBtn');lb.onclick=()=>{const o=!mb.classList.contains('lgopen');mb.classList.toggle('lgopen',o);lb.setAttribute('aria-expanded',String(o));lb.textContent=o?'범례 닫기':'범례 보기';};['pointerdown','wheel'].forEach(t=>document.getElementById('legend').addEventListener(t,e=>e.stopPropagation()));}
 gUpd();
-showIntro();legend();table();buildStatic();draw();
+showIntro();legend();table();buildStatic();vb=null;draw();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(!VT){vb=null;draw();}});
 
 let ST=null,AUTO={n:0,cls:0,ero:0};
 function ptIn(x,y,r){let c=false;for(let i=0,j=r.length-2;i<r.length;j=i,i+=2){const xi=r[i],yi=r[i+1],xj=r[j],yj=r[j+1];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c;}return c;}
